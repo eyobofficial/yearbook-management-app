@@ -1,0 +1,43 @@
+/************* DL in detail panels ************/
+.panel-detail dl dt {
+    margin-top: 1.6em !important;
+}
+
+#cost-breakdown-detail-panel dl.dl-horizontal {
+    margin-top: 1.2em;
+}
+
+dl.dl-horizontal dt {
+    margin-top: 0 !important;
+}
+
+dl.dl-horizontal .dl-group {
+    margin-top: 1.4em !important;
+}
+
+#login-panel {
+    margin-top: 20%;
+}
+
+#signup-panel {
+    margin-top: 5%;
+}
+
+/************ Form Error Styles **************/
+.errorlist li {
+    list-style-type: square !important;
+    color: #a94442 !important;
+}
+
+select {
+    background: #434857 !important;
+    border: 4px solid #434857 !important;
+    color: #fff !important;
+}
+
+
+/**************** Panel Heading Form **************/
+.panel-heading form.form-inline {
+    display: inline-block;
+    margin-left: 1.2em;
+}
