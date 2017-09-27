@@ -799,6 +799,11 @@ input[type='checkbox'] {
 	border-bottom:  1px solid #434857;
 }
 
+.hr-top {
+	padding-top: 0.8em;
+	border-top:  1px solid #434857;
+}
+
 
 /*************** Panel Sizing Styles ***************/
 @media only screen and (min-width: 480px) {

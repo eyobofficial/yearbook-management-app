@@ -71,7 +71,7 @@
                                 </li>
                                 
                                 <li {% if page_name == 'library' %} class="active" {% endif %}>
-                                    <a href="#"><span class="fa fa-archive"></span>&nbsp; Yearbook</a>
+                                    <a href="{% url 'dashboard:yearbook' %}"><span class="fa fa-archive"></span>&nbsp; Yearbook</a>
                                 </li>
 
                                 <li {% if page_name == 'Materials' %}class="active"{% endif %}>
@@ -154,16 +154,18 @@
             
             {% block footer %}
             <footer id="page-footer">
-                {% block footer-content %}
-                <ul class="list-inline text-center">
-                    <li class="small"><a href="#"><span class="fa fa-envelope"></span></a></li>
-                    <li class="small"><a href="#"><span class="fa fa-facebook"></span></a></li>
-                    <li class="small"><a href="#"><span class="fa fa-twitter"></span></a></li>
-                    <li class="small"><a href="#"><span class="fa fa-whatsapp"></span></a></li>
-                    <li class="small"><a href="#"><span class="fa fa-linkedin"></span></a></li> | 
-                    <li class="small">Copyright &copy; {% now 'Y' %}. All Rights Reserved.</li>
-                </ul>
-                {% endblock footer-content %}
+                <div class="row hr-top">
+                    {% block footer-content %}
+                    <ul class="list-inline text-right">
+                        <li class="small"><a href="#"><span class="fa fa-envelope"></span></a></li>
+                        <li class="small"><a href="#"><span class="fa fa-facebook"></span></a></li>
+                        <li class="small"><a href="#"><span class="fa fa-twitter"></span></a></li>
+                        <li class="small"><a href="#"><span class="fa fa-whatsapp"></span></a></li>
+                        <li class="small"><a href="#"><span class="fa fa-linkedin"></span></a></li> | 
+                        <li class="small">Copyright &copy; {% now 'Y' %}. All Rights Reserved.</li>
+                    </ul>
+                    {% endblock footer-content %}
+                </div><!-- /END .row .hr-top -->
             </footer><!-- /#page-footer -->
             {% endblock footer %}
         </div><!-- /.container -->
