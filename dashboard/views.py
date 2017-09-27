@@ -9,7 +9,5 @@ from .forms import TestForm
 def index(request):
     return render(request, 'dashboard/index.html')
 
-class YearbookView(CreateView):
-    pass
-
-
+def yearbook(request):
+    return render(request, 'dashboard/yearbook_form.html', context={})

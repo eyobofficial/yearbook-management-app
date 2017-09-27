@@ -6,5 +6,5 @@ app_name = 'dashboard'
 urlpatterns = [
     # Index URL
     url(r'^$', views.index, name='index'),
-    url(r'^yearbook$', views.YearbookView.as_view(), name='yearbook'),
+    url(r'^yearbook$', views.yearbook, name='yearbook'),
 ]
