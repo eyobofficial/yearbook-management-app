@@ -21,21 +21,7 @@
                             {% csrf_token %}
 
                             <!-- HIDDEN FIELDS -->
-                            <input type="hidden" name="next" value="{{ next }}"> 
-
-                            <!-- FIRST_NAME -->
-                            <div class="form-group">
-                                <label for="first-name">First Name</label>
-                                <input type="text" name="first_name" id="first-name" class="form-control" placeholder="First Name" value="{{ form.first_name.value|default_if_none:'' }}">
-                                {{ form.first_name.errors }}
-                            </div><!-- /.form-group -->
-
-                            <!-- LAST_NAME -->
-                            <div class="form-group">
-                                <label for="last-name">Last Name</label>
-                                <input type="text" name="last_name" id="last-name" class="form-control" placeholder="Last Name" value="{{ form.last_name.value|default_if_none:'' }}">
-                                {{ form.last_name.errors }}
-                            </div><!-- /.form-group -->
+                            <input type="hidden" name="next" value="{{ next }}">
 
                             <!-- USERNAME -->
                             <div class="form-group">
@@ -56,6 +42,27 @@
                                 <label for="password2">Confirm Password</label>
                                 <input type="password" name="password2" id="password2" class="form-control" placeholder="Re-type Password">
                                 {{ form.password2.errors }}
+                            </div><!-- /.form-group -->
+
+                            <!-- EMAIL -->
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" name="email" id="email" class="form-control" placeholder="Your Email" value="{{ form.email.value|default_if_none:'' }}">
+                                {{ form.email.errors }}
+                            </div><!-- /.form-group -->
+
+                            <!-- FIRST_NAME -->
+                            <div class="form-group">
+                                <label for="first-name">First Name</label>
+                                <input type="text" name="first_name" id="first-name" class="form-control" placeholder="First Name" value="{{ form.first_name.value|default_if_none:'' }}">
+                                {{ form.first_name.errors }}
+                            </div><!-- /.form-group -->
+
+                            <!-- LAST_NAME -->
+                            <div class="form-group">
+                                <label for="last-name">Last Name</label>
+                                <input type="text" name="last_name" id="last-name" class="form-control" placeholder="Last Name" value="{{ form.last_name.value|default_if_none:'' }}">
+                                {{ form.last_name.errors }}
                             </div><!-- /.form-group -->
 
                             <div class="form-group">

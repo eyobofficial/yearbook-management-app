@@ -61,7 +61,7 @@
                                 <img src="{% static 'img/dummy_profile_pic.jpg' %}" alt="Profile Photo" width="180" class="breath-up-xs img-thumbnail">
                             </div>
 
-                            <h2 class="h4 breath-up-sm"><span class="fa fa-user"></span> &nbsp; Hanna Tefera</h2>
+                            <h2 class="h4 breath-up-sm"><span class="fa fa-user"></span> &nbsp; {{ user.get_full_name|title }}</h2>
                         </section>
 
                         <nav id="side-nav">
@@ -133,7 +133,7 @@
 
                                 <ul class="nav navbar-nav navbar-right">
                                     <li class="bold"><a href="#"><span class="fa fa-user" aria-hidden="true"></span>&nbsp; {% if user.get_full_name %}{{ user.get_full_name|title }}{% else %}{{ user.get_username|capfirst }}{% endif %}</a></li>
-                                    <li class="bold"><a href="#">Logout <span class="fa fa-sign-out"></span></a></li>
+                                    <li class="bold"><a href="{% url 'logout' %}">Logout <span class="fa fa-sign-out"></span></a></li>
                                 </ul>
                             </div><!-- /#menu -->
                         </nav>
