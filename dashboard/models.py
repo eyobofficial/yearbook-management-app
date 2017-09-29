@@ -45,3 +45,43 @@ class YearbookAnswer(models.Model):
     def __str__(self):
         return self.answer
 
+class Poll(models.Model):
+    poll_text = models.CharField(max_length=255, help_text='Poll question to display')
+    description = models.TextField(null=True, blank=True, help_text='Description of the purpose of the poll (Optional)')
+    active = models.BooleanField('Open for Vote', default=False, help_text='Weather or not the poll is currently open for voting.')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    end_at = models.DateField('Deadline for voting')
+
+    class Meta:
+        ordering = ['active', '-end_at',]
+
+    def __str__(self):
+        return self.poll_text
+
+    def get_absolute_url(self):
+        return reverse(url='dashboard:poll-detail', kwargs={'pk': str(self.pk)})
+
+class PollChoice(models.Model):
+    poll = models.ForeignKey(Poll, on_delete=models.CASCADE)
+    choice_text = models.CharField(max_length=255)
+
+    class Meta:
+        ordering = ['poll']
+
+    def __str__(self):
+        return self.choice_text
+
+class PollResult(models.Model):
+    poll = models.ForeignKey(Poll, on_delete=models.CASCADE)
+    # student = models.ForeignKey(User, on_delete=models.CASCADE)
+    choice = models.ForeignKey(PollChoice, on_delete=models.CASCADE)
+    submitted_date = models.DateTimeField(auto_now_add=True, help_text='Date where the student voted on the poll')
+
+    class Meta:
+        ordering = ['poll', '-submitted_date',]
+
+    def __str__(self):
+        return '{}, {}'.format(self.poll, self.choice)
+
+
