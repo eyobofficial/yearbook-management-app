@@ -9,10 +9,17 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
 
 # Import Models
-from . import models
+from .models import (Yearbook, 
+                     StudentYearbook,
+                     Poll,
+                     PollChoice,
+                     PollResult,
+                     Event,
+                     Program,
+                     )
 
 # Import Forms
-from dashboard.forms import SignupForm
+from dashboard.forms import SignupForm, YearbookForm, YearbookSubmitForm
 
 # Signup view
 def signup(request):
@@ -51,7 +58,99 @@ def signup(request):
 
 @login_required
 def index(request):
-    return render(request, 'dashboard/index.html')
+    return render(request, 'dashboard/index.html', {
+            'page_name': 'index',
+        })
 
 def yearbook(request):
-    return render(request, 'dashboard/yearbook_form.html', context={})
+    try:
+        yearbook_detail = StudentYearbook.objects.get(student=request.user)
+    except:
+        yearbook_detail = None
+
+    if yearbook_detail is None:
+        return redirect('dashboard:yearbook-create')
+    else:
+        if yearbook_detail.submit is not True:
+            return redirect('dashboard:yearbook-submit')
+        else:
+            return render(request, 'dashboard/yearbook_detail.html', {
+                    'yearbook': yearbook_detail,
+                    'page_name': 'yearbook',
+                })
+
+
+def yearbook_create(request):
+    try:
+        yearbook_detail = StudentYearbook.objects.get(student=request.user)
+    except:
+        yearbook_detail = None
+
+    form_class = YearbookForm
+
+    if yearbook_detail is not None:
+        if yearbook_detail.submit is True:
+            return redirect('dashboard:yearbook')
+        else:
+            if request.method == 'POST':
+                form = form_class(request.POST, instance=yearbook_detail)
+
+                if form.is_valid():
+                    form.save()
+                    return redirect('dashboard:yearbook-submit')
+            else:
+                form = form_class(instance=yearbook_detail)
+            return render(request, 'dashboard/yearbook_form.html', {
+                    'form': form,
+                    'page_name': 'yearbook',
+                }) 
+    else:
+        if request.method == 'POST':
+            # POST request
+            form = form_class(request.POST)
+
+            if form.is_valid():
+                form.instance.student = request.user
+                form.save()
+                return redirect('dashboard:yearbook-submit')
+        else:
+            # GET Request
+            form = form_class()
+        return render(request, 'dashboard/yearbook_form.html', context={
+                'form': form,
+                'page_name': 'yearbook',
+            })
+
+def yearbook_submit(request):
+    try:
+        yearbook_detail = StudentYearbook.objects.get(student=request.user)
+    except:
+        yearbook_detail = None
+
+    if yearbook_detail is None:
+        return redirect('dashboard:yearbook-create')
+    else:
+        form_class = YearbookSubmitForm
+
+        if request.method == 'POST':
+            # POST request
+            form = form_class(request.POST)
+
+            if form.is_valid():
+                yearbook_detail.submit = True
+                yearbook_detail.save()
+                return redirect('dashboard:yearbook')
+        else:
+            # GET Request
+            if yearbook_detail.submit is True:
+                return redirect('dashboard:yearbook')
+            form = form_class()
+        return render(request, 'dashboard/yearbook_submit.html', context={
+                'form': form,
+                'yearbook': yearbook_detail,
+                'page_name': 'yearbook',
+            })
+
+
+    
+

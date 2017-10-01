@@ -66,11 +66,11 @@
 
                         <nav id="side-nav">
                             <ul class="list-unstyled">
-                                <li {% if page_name == 'Index' %} class="active" {% endif %}>
+                                <li {% if page_name == 'index' %} class="active" {% endif %}>
                                     <a href="{% url 'dashboard:index' %}"><span class="fa fa-home"></span>&nbsp; Home</a>
                                 </li>
                                 
-                                <li {% if page_name == 'library' %} class="active" {% endif %}>
+                                <li {% if page_name == 'yearbook' %} class="active" {% endif %}>
                                     <a href="{% url 'dashboard:yearbook' %}"><span class="fa fa-archive"></span>&nbsp; Yearbook</a>
                                 </li>
 

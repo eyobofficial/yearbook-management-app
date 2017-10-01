@@ -468,6 +468,11 @@ a.btn-danger,
 }
 
 
+#main {
+	padding-bottom: 2.4em;
+}
+
+
 /******************************** General Style ***************************************/
 #menu-col .panel-default {
 	border-radius: 0;
@@ -736,6 +741,17 @@ input[type='checkbox'] {
 	border: 1px solid red !important;
 	padding: 1em;
 	width: 2em;
+}
+
+fieldset {
+	margin-bottom: 2.2em;
+}
+
+legend {
+	color: #737373;
+	text-transform: uppercase;
+	padding-bottom: 0.8em;
+	border-bottom:  1px solid #434857;
 }
 
 

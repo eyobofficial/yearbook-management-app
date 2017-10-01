@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <h2>Submit Detail</h2>
+
+    <dl class="dl-horizontal">
+        <dt>First Name:</dt>
+        <dd>{{ yearbook.first_name }} </dd>
+
+        <dt>Last Name:</dt>
+        <dd>{{ yearbook.last_name }} </dd>
+
+        <dt>Nickname:</dt>
+        <dd>{{ yearbook.nickname }} </dd>
+
+        <dt>Birthday:</dt>
+        <dd>{{ yearbook.birthday }} </dd>
+
+        <dt>Abour Yourself:</dt>
+        <dd>{{ yearbook.bio }} </dd>
+
+        <dt>Your Favorite Quote:</dt>
+        <dd>{{ yearbook.quote }} </dd>
+
+        <dt>Who would you like to thank?:</dt>
+        <dd>{{ yearbook.thank_you_message }} </dd>
+    </dl>
+    
+    <p>Please confirm to submit your profile now:</p>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form|crispy }}
+
+        <div class="form-group">
+            <input type="submit" name="submit" value="Submit Profile" class="btn btn-primary">
+            <a href="{% url 'dashboard:yearbook-create' %}" class="btn btn-danger">Edit Profile</a>
+        </div>
+    </form>
+{% endblock content %}
