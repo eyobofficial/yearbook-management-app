@@ -16,7 +16,7 @@ class SignupForm(UserCreationForm):
 class YearbookForm(forms.ModelForm):
     class Meta:
         model = StudentYearbook
-        fields = ['first_name', 'last_name', 'nickname', 'birthdate', 'bio', 'quote', 'thank_you_message',]
+        fields = ['first_name', 'last_name', 'nickname', 'birthdate', 'photo', 'bio', 'quote', 'thank_you_message',]
 
     def __init__(self, *args, **kwargs):
         self.helper = FormHelper()
@@ -27,6 +27,10 @@ class YearbookForm(forms.ModelForm):
                         'last_name',
                         'nickname',
                         'birthdate',
+                    ),
+                    Fieldset(
+                        '<span class="fa fa-camera"></span>&nbsp; Pictures',
+                        'photo',
                     ),
                     Fieldset(
                         '<span class="fa fa-bullhorn"></span>&nbsp; Fun Stuffs',

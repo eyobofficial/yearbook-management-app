@@ -93,7 +93,7 @@ def yearbook_create(request):
             return redirect('dashboard:yearbook')
         else:
             if request.method == 'POST':
-                form = form_class(request.POST, instance=yearbook_detail)
+                form = form_class(request.POST, request.FILES, instance=yearbook_detail)
 
                 if form.is_valid():
                     form.save()
@@ -107,7 +107,7 @@ def yearbook_create(request):
     else:
         if request.method == 'POST':
             # POST request
-            form = form_class(request.POST)
+            form = form_class(request.POST, request.FILES)
 
             if form.is_valid():
                 form.instance.student = request.user

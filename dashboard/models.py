@@ -10,6 +10,10 @@ class Yearbook(models.Model):
     def __str__(self):
         return self.title
 
+# Callable for naming student photo path
+def student_suit_path(instance, filename):
+    return 'uploads/students/{}/{}'.format(instance.student.id, 'suit.jpg')
+
 class StudentYearbook(models.Model):
     student = models.OneToOneField(User, on_delete=models.CASCADE)
     yearbook = models.ForeignKey(Yearbook, default=1, on_delete=models.CASCADE)
@@ -17,6 +21,7 @@ class StudentYearbook(models.Model):
     last_name = models.CharField(max_length=100)
     nickname = models.CharField(max_length=100, null=True, blank=True, help_text='Do you have a nickname? (Optional)')
     birthdate = models.DateField()
+    photo = models.ImageField(upload_to=student_suit_path, default='uploads/no_photo.jpg')
     bio = models.TextField('About yourself?', help_text='Tell the world about yourself in less than 300 characters.')
     quote = models.TextField('Your favorite quote or motto?')
     thank_you_message = models.TextField('Who would you like to thank?', help_text='Take this opportunity to thank those who are special to you.')
