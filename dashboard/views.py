@@ -79,32 +79,20 @@ def yearbook(request):
                     'page_name': 'yearbook',
                 })
 
-
 def yearbook_create(request):
     try:
         yearbook_detail = StudentYearbook.objects.get(student=request.user)
     except:
         yearbook_detail = None
 
-    form_class = YearbookForm
-
     if yearbook_detail is not None:
         if yearbook_detail.submit is True:
             return redirect('dashboard:yearbook')
         else:
-            if request.method == 'POST':
-                form = form_class(request.POST, request.FILES, instance=yearbook_detail)
-
-                if form.is_valid():
-                    form.save()
-                    return redirect('dashboard:yearbook-submit')
-            else:
-                form = form_class(instance=yearbook_detail)
-            return render(request, 'dashboard/yearbook_form.html', {
-                    'form': form,
-                    'page_name': 'yearbook',
-                }) 
+            return redirect('dashboard:yearbook-update')
     else:
+        form_class = YearbookForm
+
         if request.method == 'POST':
             # POST request
             form = form_class(request.POST, request.FILES)
@@ -120,6 +108,33 @@ def yearbook_create(request):
                 'form': form,
                 'page_name': 'yearbook',
             })
+
+def yearbook_update(request):
+    try:
+        yearbook_detail = StudentYearbook.objects.get(student=request.user)
+    except:
+        yearbook_detail = None
+
+    if yearbook_detail is None:
+        return redirect('dashboard:yearbook-create')
+    else:
+        if yearbook_detail.submit is True:
+            return redirect('dashboard:yearbook')
+        else:
+            form_class = YearbookForm
+
+            if request.method == 'POST':
+                form = form_class(request.POST, request.FILES, instance=yearbook_detail)
+
+                if form.is_valid():
+                    form.save()
+                    return redirect('dashboard:yearbook-submit')
+            else:
+                form = form_class(instance=yearbook_detail)
+            return render(request, 'dashboard/yearbook_form.html', {
+                    'form': form,
+                    'page_name': 'yearbook',
+                }) 
 
 def yearbook_submit(request):
     try:

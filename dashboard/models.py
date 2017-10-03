@@ -45,41 +45,6 @@ class StudentYearbook(models.Model):
     def get_absolute_url(self):
         return reverse(url='dashboard:student-yearbook-detail', kwargs={'pk': str(self.pk)})
 
-
-# class YearbookQuestion(models.Model):
-#     yearbook = models.ForeignKey(Yearbook, on_delete=models.CASCADE)
-#     question_text = models.CharField(max_length=100)
-#     hint = models.CharField(max_length=200, blank=True, null=True, help_text='Give a hint on how to answer the question. (Optional)')
-#     publish = models.BooleanField(default=False)
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
-
-#     class Meta:
-#         ordering = ['publish', 'question_text',]
-#         permissions = (
-#                 ('can create yearbook question', 'Create a yearbook question'),
-#             )
-
-#     def __str__(self):
-#         return self.question_text
-
-#     def get_absolute_url(self):
-#         return reverse(url='dashboard:yearbook-question-detail', kwargs={'pk': str(self.pk)})
-
-# class YearbookAnswer(models.Model):
-#     yearbook_question = models.ForeignKey(YearbookQuestion, on_delete=models.CASCADE)
-#     answer = models.TextField()
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
-
-#     class Meta:
-#         verbose_name = 'Student\'s Yearbook Answer'
-#         verbose_name_plural = 'Student\'s Yearbook Answers'
-#         ordering = ['yearbook_question', 'updated_at',]
-
-#     def __str__(self):
-#         return self.answer
-
 class Poll(models.Model):
     poll_text = models.CharField(max_length=255, help_text='Poll question to display')
     description = models.TextField(null=True, blank=True, help_text='Description of the purpose of the poll (Optional)')
