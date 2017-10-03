@@ -820,6 +820,13 @@ legend {
 	border-top:  1px solid #434857;
 }
 
+/************* alert styles *************************/
+.alert-info {
+	background-color: rgba(217,237,247,0.5);
+	border-color: rgba(217,237,247,0.2);
+	color: #cfd2da;;
+}
+
 
 /*************** Panel Sizing Styles ***************/
 @media only screen and (min-width: 480px) {

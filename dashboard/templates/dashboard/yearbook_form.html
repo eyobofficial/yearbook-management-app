@@ -2,5 +2,21 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
+    <div class="alert alert-info">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h4 class="breath-down-sm">INSTRUCTIONS</h4>
+                    <p>1. Fill all the required Lorem ipsum dolor sit amet.</p>
+                    <p>2. Verify your profile.</p>
+                    <p>3. Finally, submit the profile.</p>
+                </div>
+
+                <div class="col-sm-6">
+                  
+                </div>
+            </div>
+        </div>
+    </div>
    {% crispy form form.helper %}
 {% endblock content %}
