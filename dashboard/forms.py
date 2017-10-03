@@ -47,4 +47,4 @@ class YearbookForm(forms.ModelForm):
         super(YearbookForm, self).__init__(*args, **kwargs)
 
 class YearbookSubmitForm(forms.Form):
-    i_agree = forms.BooleanField('I confirm that the above profile!', help_text='Please confirm before you submit your profile')
+    i_agree = forms.BooleanField(label='&nbsp; I confirm I have checked all the details are mine.')

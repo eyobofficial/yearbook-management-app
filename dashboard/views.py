@@ -74,7 +74,7 @@ def yearbook(request):
         if yearbook_detail.submit is not True:
             return redirect('dashboard:yearbook-submit')
         else:
-            return render(request, 'dashboard/yearbook_detail.html', {
+            return render(request, 'dashboard/yearbook.html', {
                     'yearbook': yearbook_detail,
                     'page_name': 'yearbook',
                 })

@@ -43,6 +43,21 @@ select {
 }
 
 /******************* DL ********************/
-dl dt {
+dl > dt {
+    color: gray;
     font-weight: normal !important;
+    margin-bottom: 0.1em;
+}
+
+dl > dd {
+    color: inherit;
+    font-size: 1.2em;
+    font-weight: 400;
+    margin-bottom: 1.2em;
+}
+
+
+/***************** Yearbook Image *****************/
+.yearbook-pic {
+    height: 280px;
 }

@@ -1,29 +1,55 @@
-{% extends 'base.html' %}
-{% load crispy_forms_tags %}
+{% load static %}
+<legend><span class="fa fa-user-circle"></span>&nbsp; STUDENT DETAILS</legend>
+<dl>
+    <dt>First Name:</dt>
+    <dd>{{ yearbook.first_name }} </dd>
 
-{% block content %}
-<legend>STUDENT DETAILS</legend>
-<h2>Yearbook Detail</h2>
-    <dl>
-        <dt>First Name:</dt>
-        <dd>{{ yearbook.first_name }} </dd>
+    <dt>Last Name:</dt>
+    <dd>{{ yearbook.last_name }} </dd>
 
-        <dt>Last Name:</dt>
-        <dd>{{ yearbook.last_name }} </dd>
+    <dt>Nickname:</dt>
+    <dd>{{ yearbook.nickname }} </dd>
 
-        <dt>Nickname:</dt>
-        <dd>{{ yearbook.nickname }} </dd>
+    <dt>Birthday:</dt>
+    <dd>{{ yearbook.birthdate|date:'M d, Y' }} </dd>
+</dl>
+<legend><span class="fa fa-camera"></span>&nbsp; PICTURES</legend>
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <img src="{{ yearbook.gown_photo.url }}" alt="Gown Photo" class="img-responsive yearbook-pic">               
+                <div class="panel-footer">
+                    Gown Photo
+                </div>
+            </div>
+        </div><!-- /.col-sm-2 -->
 
-        <dt>Birthday:</dt>
-        <dd>{{ yearbook.birthday }} </dd>
+        <div class="col-sm-4 col-sm-offsext-1"> 
+            <div class="panel panel-default">
+                <img src="{{ yearbook.suit_photo.url }}" alt="Suit Photo" class="img-responsive yearbook-pic">
+                <div class="panel-footer">
+                    Suit/Dress Photo
+                </div>
+            </div>
+        </div><!-- /.col-sm-2 -->
 
-        <dt>Abour Yourself:</dt>
-        <dd>{{ yearbook.bio }} </dd>
+        <div class="col-sm-4 col-sm-offsext-1"> 
+            <div class="panel panel-default">
+                <img src="{{ yearbook.baby_photo.url }}" alt="Baby Photo" class="img-responsive yearbook-pic">
+                <div class="panel-footer">
+                    Baby Photo
+                </div>
+            </div>
+        </div><!-- /.col-sm-2 -->
+    </div><!-- /.row -->
+<legend><span class="fa fa-bullhorn"></span>&nbsp; FUN STUFFS</legend>
+<dl>
+    <dt>Abour Yourself:</dt>
+    <dd>{{ yearbook.bio }} </dd>
 
-        <dt>Your Favorite Quote:</dt>
-        <dd>{{ yearbook.quote }} </dd>
+    <dt>Your Favorite Quote:</dt>
+    <dd>{{ yearbook.quote }} </dd>
 
-        <dt>Who would you like to thank?:</dt>
-        <dd>{{ yearbook.thank_you_message }} </dd>
-    </dl>
-{% endblock content %}
+    <dt>Who would you like to thank:</dt>
+    <dd>{{ yearbook.thank_you_message }} </dd>
+</dl>

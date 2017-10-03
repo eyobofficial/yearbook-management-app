@@ -827,6 +827,10 @@ legend {
 	color: #cfd2da;;
 }
 
+.alert-danger {
+	background-color: rgba(242,222,222,0.6)
+}
+
 
 /*************** Panel Sizing Styles ***************/
 @media only screen and (min-width: 480px) {

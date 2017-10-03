@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="alert alert-info">
+        <p class="text-center"><strong><span class="fa fa-info-circle"></span>&nbsp; Your yearbook profile has been submitted on {{ yearbook.submitted_date|date:'M d, Y'}} </strong></p>
+    </div>
+    {% include 'dashboard/yearbook_detail.html' %}
+{% endblock content %}
