@@ -9,7 +9,7 @@
 
     {% for choice in poll.pollchoice_set.all %}      
     <label>
-        <input type="radio" name="choice" value="{{ choice.id }}">
+        <input type="radio" name="choice" value="{{ choice.id }}" required="required">
         {{ choice.choice_text }} &nbsp;       
     </label>
     <br>

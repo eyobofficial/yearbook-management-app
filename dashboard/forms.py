@@ -6,7 +6,11 @@ from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit
 from django.contrib.auth.forms import UserCreationForm
 
 # Import models
-from .models import StudentYearbook
+from .models import (StudentYearbook,
+                     Poll,
+                     PollChoice,
+                     Vote,
+                     )
 
 class SignupForm(UserCreationForm):
     first_name = forms.CharField(max_length=100)
@@ -48,3 +52,8 @@ class YearbookForm(forms.ModelForm):
 
 class YearbookSubmitForm(forms.Form):
     i_agree = forms.BooleanField(label='&nbsp; I confirm I have checked all the details are mine.')
+
+class PollForm(forms.ModelForm):
+    class Meta:
+        model = Poll 
+        fields = ('poll_text', 'description',)

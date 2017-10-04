@@ -19,7 +19,11 @@ from .models import (Yearbook,
                      )
 
 # Import Forms
-from dashboard.forms import SignupForm, YearbookForm, YearbookSubmitForm
+from dashboard.forms import (SignupForm, 
+                             YearbookForm, 
+                             YearbookSubmitForm,
+                             PollForm,
+                             )
 
 # Signup view
 def signup(request):
@@ -169,7 +173,49 @@ def yearbook_submit(request):
 class PollList(generic.ListView):
     model = Poll
 
-class PollDetail(generic.DetailView):
-    model = Poll
+def poll_detail(request, pk):
+    # Get a particular poll 
+    try:
+        poll = Poll.objects.get(pk=pk)
+    except:
+        poll = None
+    
+    # Get a Choice List for a specific poll 
+    try:
+        choice_list = PollChoice.objects.filter(poll_id=pk)
+    except:
+        choice_list = None
+
+    if request.method == 'POST':
+        # POST Request
+        choice = request.POST.get('choice')
+        if choice is not None:
+            # Update Record
+            user_vote = Vote(poll=poll, choice_id=choice, student=request.user)
+            user_vote.save()
+            return redirect('dashboard:index')
+    else:
+        # GET Request
+        try:
+            vote = Vote.objects.get(student_id=request.user.id, poll_id=pk)
+        except:
+            vote = None
+
+        if vote is not None:
+            # i.e. User already voted
+            return redirect('dashboard:poll-result', poll_id=vote.id)
+
+        if poll is None:
+            # No such poll is found
+            return redirect('dashboard:poll-list')
+    return render(request, 'dashboard/poll_detail.html', {
+            'poll': poll,
+            'choice_list': choice_list, 
+        })
+
+def poll_result(request, pk):
+    pass
+
+
 
 

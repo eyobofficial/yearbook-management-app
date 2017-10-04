@@ -74,7 +74,7 @@ class PollChoice(models.Model):
 
 class Vote(models.Model):
     poll = models.ForeignKey(Poll, on_delete=models.CASCADE)
-    student = models.ForeignKey(User, on_delete=models.CASCADE)
+    student = models.ForeignKey(User, on_delete=models.CASCADE, unique=True)
     choice = models.ForeignKey(PollChoice, on_delete=models.CASCADE)
     submitted_date = models.DateTimeField(auto_now_add=True, help_text='Date where the student voted on the poll')
 

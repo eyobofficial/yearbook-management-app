@@ -11,5 +11,6 @@ urlpatterns = [
     url(r'^yearbook/update$', views.yearbook_update, name='yearbook-update'),
     url(r'^yearbook/submit$', views.yearbook_submit, name='yearbook-submit'),
     url(r'^polls/$', views.PollList.as_view(), name='poll-list'),
-    url(r'^poll/(?P<pk>[0-9]+)$', views.PollDetail.as_view(), name='poll-detail'),
+    url(r'^poll/(?P<pk>[0-9]+)/vote/$', views.poll_detail, name='poll-detail'),
+    url(r'^poll/(?P<pk>[0-9]+)/result/$', views.poll_result, name='poll-result'),
 ]
