@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+   <h2 class="h4">Poll Result Page</h2>
+   {{ user_vote.choice.choice_text }}<br>
+   {{ total_vote }}<br>
+   Choice List: {{ choice_list }} <br>
+   Choice Votes: {{ choice_votes }}
+
+   <br><br><br>
+   <ul>
+   {% for choice_poll in choice_polls|dictsortreversed:'count' %}
+   <li>{{ choice_poll.text }}: {{ choice_poll.count }} ({{ choice_poll.percent }})</li>
+   {% endfor %}
+   </ul>
+{% endblock content %}

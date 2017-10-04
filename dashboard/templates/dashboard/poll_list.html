@@ -2,9 +2,48 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-   <ol>
-   {% for poll in poll_list %}
-       <li>{{ poll.poll_text }}</li>
-   {% endfor %}
-   </ol> 
+{% if active_poll_count > 0 %}
+   <div class="alert alert-success">
+       <p class="text-center"><span class="fa fa-info-circle"></span> &nbsp; You currently have <strong>{{ active_poll_count}}</strong> open polls to vote.</p>
+   </div><!-- /.alert -->
+{% else %}
+   <div class="alert alert-danger">
+       <p class="text-center"><span class="fa fa-info-circle"></span> &nbsp; You currently have no open polls to vote.</p>
+   </div><!-- /.alert -->
+{% endif %}
+
+
+<div class="panel panel-default panel-lg">
+    <div class="panel-heading">
+        Polls
+    </div><!-- /.panel-heading -->
+
+    <div class="panel-body">
+        <div class="table-responsive">
+            <table class="table panel-table table-hover table-stripped">
+
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Poll Title</th>
+                    <th>Status</th>
+                    <th class="text-center">Deadline</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for poll in poll_list %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td class="bold"><a href="{% url 'dashboard:poll-detail' poll.id %}">{{ poll.poll_text|capfirst }}</a></td>
+                    <td>{% if poll.active %} <span class="badge badge-primary"> open </span> {% else %} <span class="badge badge-default"> closed </span> {% endif %}</td>
+                    <td class="text-center"><span class="fa fa-calendar"></span>&nbsp; {{ poll.end_at|date:'M d, Y' }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+                
+            </table>
+        </div>
+    </div>
+</div>
 {% endblock content %}

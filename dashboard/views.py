@@ -173,6 +173,12 @@ def yearbook_submit(request):
 class PollList(generic.ListView):
     model = Poll
 
+    def get_context_data(self, *args, **kwargs):
+        context = super(PollList, self).get_context_data(*args, **kwargs)
+        context['page_name'] = 'polls'
+        context['active_poll_count'] = len(Poll.objects.filter(active=True))
+        return context
+
 def poll_detail(request, pk):
     # Get a particular poll 
     try:
@@ -203,18 +209,54 @@ def poll_detail(request, pk):
 
         if vote is not None:
             # i.e. User already voted
-            return redirect('dashboard:poll-result', poll_id=vote.id)
+            return redirect('dashboard:poll-result', pk=poll.id)
 
         if poll is None:
             # No such poll is found
             return redirect('dashboard:poll-list')
+
+        if poll.active is False:
+            # Voting is closed
+            return redirect('dashboard:poll-result', pk=poll.id)
     return render(request, 'dashboard/poll_detail.html', {
             'poll': poll,
             'choice_list': choice_list, 
         })
 
 def poll_result(request, pk):
-    pass
+    # Get a particular poll 
+    try:
+        poll = Poll.objects.get(pk=pk)
+    except:
+        poll = None
+
+    # Get current logged user's vote    
+    try:
+        user_vote = Vote.objects.get(poll_id=pk, student_id=request.user.id)
+    except:
+        user_vote = None
+    
+    total_vote = Vote.objects.filter(poll_id=pk).count()
+    choice_list = PollChoice.objects.filter(poll_id=pk)
+    choice_polls = []
+
+    for choice in choice_list:
+        choice_poll = Vote.objects.filter(choice_id=choice.id)
+        choice_dict = {
+            'id': choice.id, 
+            'text': choice.choice_text,
+            'count': choice_poll.count(),
+            'percent': (choice_poll.count() / total_vote) * 100 
+        }
+        choice_polls.append(choice_dict)
+    
+    return render(request, 'dashboard/poll_result.html', {
+            'page_name': 'polls',
+            'user_vote': user_vote,
+            'total_vote': total_vote,
+            'choice_list': choice_list,
+            'choice_polls': choice_polls,
+        })
 
 
 
