@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+   <ol>
+   {% for poll in poll_list %}
+       <li>{{ poll.poll_text }}</li>
+   {% endfor %}
+   </ol> 
+{% endblock content %}

@@ -72,7 +72,7 @@ class PollChoice(models.Model):
     def __str__(self):
         return self.choice_text
 
-class PollResult(models.Model):
+class Vote(models.Model):
     poll = models.ForeignKey(Poll, on_delete=models.CASCADE)
     student = models.ForeignKey(User, on_delete=models.CASCADE)
     choice = models.ForeignKey(PollChoice, on_delete=models.CASCADE)

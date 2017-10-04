@@ -13,7 +13,7 @@ from .models import (Yearbook,
                      StudentYearbook,
                      Poll,
                      PollChoice,
-                     PollResult,
+                     Vote,
                      Event,
                      Program,
                      )
@@ -166,6 +166,10 @@ def yearbook_submit(request):
                 'page_name': 'yearbook',
             })
 
+class PollList(generic.ListView):
+    model = Poll
 
-    
+class PollDetail(generic.DetailView):
+    model = Poll
+
 

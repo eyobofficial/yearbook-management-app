@@ -82,8 +82,8 @@
                                     <a href="#"><span class="fa fa-cube"></span>&nbsp; Calendar</a>
                                 </li>
 
-                                <li {% if page_name == 'Labours' %}class="active"{% endif %}>
-                                    <a href="#"><span class="fa fa-child"></span>&nbsp; Polls</a>
+                                <li {% if page_name == 'polls' %}class="active"{% endif %}>
+                                    <a href="{% url 'dashboard:poll-list' %}"><span class="fa fa-child"></span>&nbsp; Polls</a>
                                 </li>
 
                                 <li {% if page_name == 'Equipments' %}class="active"{% endif %}>

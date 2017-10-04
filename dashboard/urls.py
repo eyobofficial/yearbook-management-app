@@ -10,4 +10,6 @@ urlpatterns = [
     url(r'^yearbook/create$', views.yearbook_create, name='yearbook-create'),
     url(r'^yearbook/update$', views.yearbook_update, name='yearbook-update'),
     url(r'^yearbook/submit$', views.yearbook_submit, name='yearbook-submit'),
+    url(r'^polls/$', views.PollList.as_view(), name='poll-list'),
+    url(r'^poll/(?P<pk>[0-9]+)$', views.PollDetail.as_view(), name='poll-detail'),
 ]
