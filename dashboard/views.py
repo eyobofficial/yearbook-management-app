@@ -252,6 +252,7 @@ def poll_result(request, pk):
     
     return render(request, 'dashboard/poll_result.html', {
             'page_name': 'polls',
+            'poll': poll,
             'user_vote': user_vote,
             'total_vote': total_vote,
             'choice_list': choice_list,

@@ -1,7 +1,83 @@
 {% extends 'base.html' %}
 
 {% block content %}
-   <h2 class="h4">Poll Result Page</h2>
+   <legend>Poll Result</legend>
+
+   <div class="row">
+      <div class="col-sm-3">
+         <div class="widget widget-success">
+            <div class="widget-body">
+               Sep 26, 2017
+            </div>
+
+            <div class="widget-footer text-right">
+               Vote Deadline
+            </div>
+         </div>
+      </div>
+      
+      <div class="col-sm-3">
+         <div class="widget widget-warning center">
+            <div class="widget-body">
+               Sep 26, 2017
+            </div>
+
+            <div class="widget-footer text-right">
+               Vote Deadline
+            </div>
+         </div>
+      </div>
+      
+      <div class="col-sm-3">
+         <div class="widget widget-danger center">
+            <div class="widget-body">
+               Sep 26, 2017
+            </div>
+
+            <div class="widget-footer text-right">
+               Vote Deadline
+            </div>
+         </div>
+      </div>
+
+      <div class="col-sm-3">
+         <div class="widget widget-default pull-right">
+            <div class="widget-body">
+               120
+            </div>
+
+            <div class="widget-footer text-right">
+               Student Voted
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <div class="row">
+      <div class="col-sm-8">
+         <div class="panel panel-default panel-md">
+            <div class="panel-heading">
+               Poll Result
+            </div>
+
+            <div class="panel-body">
+               {{ poll.poll_text }}
+            </div>
+         </div>
+      </div><!-- /.col-sm-8 -->
+
+      <div class="col-sm-4">
+         <div class="panel panel-default panel-md">
+            <div class="panel-heading">
+               Your Vote
+            </div>
+
+            <div class="panel-body">
+               {{ poll.poll_text }}
+            </div>
+         </div>
+      </div><!-- /.col-sm-4 -->
+   </div><!-- /.row -->
    {{ user_vote.choice.choice_text }}<br>
    {{ total_vote }}<br>
    Choice List: {{ choice_list }} <br>

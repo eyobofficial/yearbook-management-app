@@ -23,6 +23,11 @@
 ******************************************************/
 
 /***************************** Helper Classes ****************************/
+.center {
+	margin-left: auto;
+	margin-right: auto;
+}
+
 .border-green {
 	border: 1px solid green;
 }
@@ -820,7 +825,64 @@ legend {
 	border-top:  1px solid #434857;
 }
 
-/************* alert styles *************************/
+/************* widget styles *************************/
+.widget {
+	width: 90%;
+	margin-top: 0.8em;
+	margin-bottom: 2.6em;
+	border-radius: 4px;
+}
+
+.widget-body {
+	min-height: 60px;
+	padding: 1.6em 0.6em 1.2em;
+	font-weight: 500;
+	font-size: 1.6em;
+	text-align: center;
+}
+
+.widget-footer {
+	padding: 1.2em 0.6em;
+	line-height: 2em;
+	font-weight: 500;
+}
+
+.widget-footer {
+	padding-top: 0.4em;
+	padding-bottom: 0.4em;
+	border-top: 1px solid #434857;
+}
+
+.widget-primary {
+	background-color: #2196F3;
+	color: #fff;
+}
+
+.widget-default {
+	background-color: #23c6c8;
+	color: #fff;
+}
+
+.widget-warning {
+	background-color: #F0AD4E;
+	color: #fff;
+}
+
+.widget-success {
+	background-color: #009688;
+	color: #fff;
+}
+
+.widget-danger {
+	background-color: #E91E63;
+	color: #fff;
+}
+
+
+.widget-purple {
+	background-color: #9C27B0;
+	color: #fff;
+}
 
 
 /*************** Panel Sizing Styles ***************/
