@@ -56,7 +56,33 @@ dl > dd {
     margin-bottom: 1.2em;
 }
 
-/*************** Widget ***********************/
+/******************* PROGRESS BAR ****************************/
+.progress {
+    height: 5px;
+    border-radius: 5px;
+    width: 100%;
+    background-color: #434857;
+}
+
+
+.progress-bar-success {
+    background-color: #23c6c8 !important;
+}
+
+
+.progress-list h3, .progress-list small {
+    line-height: 1.6em;
+    margin-bottom: 0.2em;
+    font-weight: 500;
+}
+
+.progress-list header.progress-header {
+    margin-bottom: 0.6em;
+}
+
+.progress-list small{
+    line-height: 2em;
+}
 
 
 /***************** Yearbook Image *****************/
