@@ -1,20 +1,37 @@
 {% extends 'base.html' %}
-{% load crispy_forms_tags %}
+{% load humanize %}
 
 {% block content %}
-   <p>{{ poll.poll_text }}</p>
+<legend>Vote Now 
+  <span class="pull-right header-info">
+    <span class="fa fa-calendar"></span>
+      &nbsp; Deadline <span class="label label-default"> {{ poll.end_at|naturalday:'M d' }}</span>
+    </span>
+</legend>
 
-   <form method="POST">
-    {% csrf_token %}
+ <dl>
+   <dt>Poll Question:</dt>
+   <dd>{{ poll.poll_text }}</dd>
 
-    {% for choice in poll.pollchoice_set.all %}      
+   <dt>Description:</dt>
+   <dd>{{ poll.description }}</dd>
+ </dl>
+
+ <form method="POST">
+  {% csrf_token %}
+  {% for choice in poll.pollchoice_set.all %}
+  <div class="form-group">
     <label>
         <input type="radio" name="choice" value="{{ choice.id }}" required="required">
-        {{ choice.choice_text }} &nbsp;       
+        {{ choice.choice_text }} &nbsp;
     </label>
-    <br>
-    {% endfor %}
+  </div>    
+   
+  {% endfor %}
 
-    <input type="submit" value="vote">
-   </form>
+  <div class="form-group">
+    <input type="submit" value="vote" class="btn btn-primary"> &nbsp;
+    <a href="{% url 'dashboard:poll-list' %}" title="Cancel voting" class="btn btn-danger">Cancel</a>
+  </div>
+ </form>
 {% endblock content %}

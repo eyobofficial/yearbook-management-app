@@ -199,7 +199,7 @@ def poll_detail(request, pk):
             # Update Record
             user_vote = Vote(poll=poll, choice_id=choice, student=request.user)
             user_vote.save()
-            return redirect('dashboard:index')
+            return redirect('dashboard:poll-result', pk=poll.id)
     else:
         # GET Request
         try:
@@ -230,11 +230,19 @@ def poll_result(request, pk):
     except:
         poll = None
 
+    if poll is None:
+        # i.e. The requested poll does not exist in the db
+        return redirect('dashboard:poll-list')
+
     # Get current logged user's vote    
     try:
         user_vote = Vote.objects.get(poll_id=pk, student_id=request.user.id)
     except:
         user_vote = None
+
+    if user_vote is None and poll.active:
+        # i.e. User have not votted yet and poll is currently active (i.e. votting still ongoing)
+        return redirect('dashboard:poll-detail', pk=poll.id)
     
     total_vote = Vote.objects.filter(poll_id=pk).count()
     choice_list = PollChoice.objects.filter(poll_id=pk)
@@ -242,11 +250,18 @@ def poll_result(request, pk):
 
     for choice in choice_list:
         choice_poll = Vote.objects.filter(choice_id=choice.id)
+
+        # Get percentage of votes for a particular choice
+        try:
+            percent = (choice_poll.count() / total_vote) * 100
+        except ZeroDivisionError:
+            percent = 0
+
         choice_dict = {
             'id': choice.id, 
             'text': choice.choice_text,
             'count': choice_poll.count(),
-            'percent': (choice_poll.count() / total_vote) * 100 
+            'percent': percent,
         }
         choice_polls.append(choice_dict)
     

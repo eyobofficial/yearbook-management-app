@@ -30,5 +30,5 @@ class PollChoiceAdmin(admin.ModelAdmin):
 
 @admin.register(Vote)
 class VoteAdmin(admin.ModelAdmin):
-    list_display = ('poll', 'choice', 'submitted_date',)
-    list_filter = ('poll', 'choice',)
+    list_display = ('poll', 'student', 'choice', 'submitted_date',)
+    list_filter = ('poll', 'student', 'choice',)

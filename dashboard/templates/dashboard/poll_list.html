@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load crispy_forms_tags %}
+{% load humanize %}
 
 {% block content %}
 {% if active_poll_count > 0 %}
@@ -25,7 +25,7 @@
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Poll Title</th>
+                    <th>Poll</th>
                     <th>Status</th>
                     <th class="text-center">Deadline</th>
                 </tr>

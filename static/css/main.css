@@ -89,3 +89,15 @@ dl > dd {
 .yearbook-pic {
     height: 280px;
 }
+
+
+/***************** .header-info *******************/
+.header-info {
+    text-transform: capitalize;
+    font-size: 14px;
+}
+
+.header-info > span.label {
+    padding: 0.8em 1em;
+    margin-left: 0.8em;
+}
