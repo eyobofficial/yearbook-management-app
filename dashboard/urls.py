@@ -13,4 +13,6 @@ urlpatterns = [
     url(r'^polls/$', views.PollList.as_view(), name='poll-list'),
     url(r'^poll/(?P<pk>[0-9]+)/vote/$', views.poll_detail, name='poll-detail'),
     url(r'^poll/(?P<pk>[0-9]+)/result/$', views.poll_result, name='poll-result'),
+    url(r'^events/$', views.EventList.as_view(), name='event-list'),
+    url(r'^event/(?P<pk>[0-9]+)$', views.EventDetail.as_view(), name='event-detail'),
 ]

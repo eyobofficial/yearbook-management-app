@@ -98,6 +98,6 @@ dl > dd {
 }
 
 .header-info > span.label {
-    padding: 0.8em 1em;
+    padding: 0.8em 1em 1em;
     margin-left: 0.8em;
 }

@@ -274,6 +274,22 @@ def poll_result(request, pk):
             'choice_polls': choice_polls,
         })
 
+class EventList(generic.ListView):
+    model = Event
 
+    def get_queryset(self, *args, **kwargs):
+        return Event.objects.filter(publish=True)
 
+    def get_context_data(self, *args, **kwargs):
+        context = super(EventList, self).get_context_data(*args, **kwargs)
+        context['page_name'] = 'events'
+        return context 
 
+class EventDetail(generic.DetailView):
+    model = Event
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(EventDetail, self).get_context_data(*args, **kwargs)
+        context['page_name'] = 'events'
+        context['program_list'] = Program.objects.filter(event_id=self.kwargs['pk'])
+        return context

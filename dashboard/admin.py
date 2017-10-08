@@ -32,3 +32,13 @@ class PollChoiceAdmin(admin.ModelAdmin):
 class VoteAdmin(admin.ModelAdmin):
     list_display = ('poll', 'student', 'choice', 'submitted_date',)
     list_filter = ('poll', 'student', 'choice',)
+
+@admin.register(Event)
+class EventAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title', 'start_at', 'end_at', 'publish',)
+    list_filter = ('publish',)
+
+@admin.register(Program)
+class ProgramAdmin(admin.ModelAdmin):
+    list_display = ('event', 'title', 'start_at', 'end_at',)
+    list_filter = ('event',)

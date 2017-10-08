@@ -74,8 +74,8 @@
                                     <a href="{% url 'dashboard:yearbook' %}"><span class="fa fa-archive"></span>&nbsp; Yearbook</a>
                                 </li>
 
-                                <li {% if page_name == 'Materials' %}class="active"{% endif %}>
-                                    <a href="#"><span class="fa fa-cube"></span>&nbsp; Events</a>
+                                <li {% if page_name == 'events' %}class="active"{% endif %}>
+                                    <a href="{% url 'dashboard:event-list' %}"><span class="fa fa-cube"></span>&nbsp; Events</a>
                                 </li>
 
                                  <li {% if page_name == 'Materials' %}class="active"{% endif %}>

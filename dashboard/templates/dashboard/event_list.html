@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<legend>Upcoming Events</legend>
+{% for event in event_list %}
+<ul>
+    <li><a href="{% url 'dashboard:event-detail' event.id %}">{{ event.title|title }}</a></li>
+</ul>
+{% endfor %}
+{% endblock %}
