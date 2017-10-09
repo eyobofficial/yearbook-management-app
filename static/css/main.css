@@ -101,3 +101,13 @@ dl > dd {
     padding: 0.8em 1em 1em;
     margin-left: 0.8em;
 }
+
+
+/************ Event Image *********************/
+.event-img {
+    display: inline-block;
+    border-radius: 2px;
+    border: 4px solid rgba(207,210,218,0.5);
+    width: 90%;
+    height: auto;
+}

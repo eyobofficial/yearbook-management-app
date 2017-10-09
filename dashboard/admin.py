@@ -35,7 +35,7 @@ class VoteAdmin(admin.ModelAdmin):
 
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'start_at', 'end_at', 'publish',)
+    list_display = ('id', 'title', 'event_datetime', 'publish',)
     list_filter = ('publish',)
 
 @admin.register(Program)

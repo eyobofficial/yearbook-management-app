@@ -84,20 +84,25 @@ class Vote(models.Model):
     def __str__(self):
         return '{}, {}'.format(self.poll, self.choice)
 
+# Callable for naming student photo path
+def event_photo_path(instance, filename):
+    sluged_title = instance.title.replace(' ', '-').lower()
+    return 'uploads/events/{}/{}'.format(sluged_title, 'event_photo.jpg')
+
 class Event(models.Model):
     title = models.CharField(max_length=100)
     description =  models.TextField(help_text='Summary of the event')
     dress_code = models.TextField(null=True, blank=True, help_text='Are there any dress codes to follow? (Optional)')
     venue = models.CharField(max_length=100, help_text='Where the event is taking place')
-    start_at = models.DateTimeField(help_text='Starting date and time of the event')
-    end_at = models.DateTimeField(help_text='Ending date and time of the event')
+    event_datetime = models.DateTimeField(help_text='Date and time of the event')
+    event_photo = models.ImageField(upload_to=event_photo_path, null=True, blank=True)
     fee = models.DecimalField(decimal_places=2, max_digits=12, default=0.00, help_text='Entrance Fee for the event. (Enter 0.00 if event is free)')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     publish = models.BooleanField(default=False, help_text='Publish to make event visible to all students')
 
     class Meta:
-        ordering = ['-start_at', 'title',]
+        ordering = ['-event_datetime', 'title',]
 
     def __str__(self):
         return self.title

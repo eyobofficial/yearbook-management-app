@@ -5,7 +5,7 @@
 <legend>{{ event.title|title }}
     <span class="header-info pull-right">
         <span class="label label-default">
-            <span class="fa fa-calendar"></span>&nbsp; {{ event.end_at|date:'H:i M d, Y' }}
+            <span class="fa fa-calendar"></span>&nbsp; {{ event.event_datetime|date:'M d, Y' }}
         </span>
     </span>
 </legend>
@@ -14,14 +14,36 @@
     <div class="col-sm-6">
         <dl>
             <dt><span class="fa fa-calendar"></span>&nbsp; Event Time</dt>
-            <dd> </dd>
+            <dd>{{ event.event_datetime|date:'H:i A M d, Y' }}</dd>
 
             <dt><span class="fa fa-map-marker"></span>&nbsp; Venue</dt>
             <dd>Main Hall</dd>
 
-            <dt><span class="fa fa-calendar"></span>&nbsp; Dress Code</dt>
-            <dd></dd>
+            <dt><span class="fa fa-user-secret"></span>&nbsp; Dress Code</dt>
+            {% if event.dress_code %}
+            <dd>{{ event.dress_code }}</dd>
+            {% else %}
+            <dd>(No dress code is specified)</dd>
+            {% endif %}
+
+            <dt><span class="fa fa-pencil-square-o"></span>&nbsp; Description</dt>
+            {% if event.description %}
+            <dd>{{ event.description }}</dd>
+            {% else %}
+            <dd>(No event description)</dd>
+            {% endif %}
+
         </dl>
+    </div><!-- /.col-sm-6 -->
+
+    <div class="col-sm-6">
+        <div class="event-img-container text-right">
+            {% if event.event_photo %}
+            <img class="event-img" src="{{ event.event_photo.url }}" alt="{{ event.title }}" class="img-responsive">
+            {% else %}
+            <img class="event-img" src="/media/defaults/default_event_photo.jpg" alt="{{ event.title }}" class="img-responsive">
+            {% endif %}
+        </div>
     </div>
 </section>
 
