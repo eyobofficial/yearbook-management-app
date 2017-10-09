@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<legend>Payments</legend>
+{% for payment in payment_list %}
+<ul>
+    <li><a href="{% url 'dashboard:payment-detail' payment.id %}">{{ payment.title|title }}</a></li>
+</ul>
+{% endfor %}
+{% endblock %}

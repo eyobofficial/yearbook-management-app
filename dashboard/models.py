@@ -125,4 +125,32 @@ class Program(models.Model):
     def __str__(self):
         return '{} - ({} Event)'.format(self.title, self.event)
 
+class Payment(models.Model):
+    title = models.CharField('Payment Title', max_length=100)
+    description = models.TextField(null=True, blank=True, help_text='Describe why this particular payment is needed')
+    amount = models.DecimalField('Payment Amount', max_digits=12, decimal_places=2)
+    due_date = models.DateField('Due date of the payment')
+    publish = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    update_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['publish', 'due_date', 'amount',]
+
+    def __str__(self):
+        return self.title 
+
+    def get_absolute_url(self):
+        return reverse('dashboard:payment-detail', kwargs={'pk': str(self.pk)})
+
+class StudentPayment(models.Model):
+    payment = models.ForeignKey(Payment, on_delete=models.CASCADE)
+    student = models.ForeignKey(User, on_delete=models.CASCADE)
+    payment_date = models.DateField('Date of payment')
+
+    class Meta:
+        ordering = ['payment', 'payment_date',]
+
+    def __str__(self):
+        return 'Paym: {}, Student: {}'.format(self.payment, self.student)
 

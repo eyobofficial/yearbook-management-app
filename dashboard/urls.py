@@ -15,4 +15,6 @@ urlpatterns = [
     url(r'^poll/(?P<pk>[0-9]+)/result/$', views.poll_result, name='poll-result'),
     url(r'^events/$', views.EventList.as_view(), name='event-list'),
     url(r'^event/(?P<pk>[0-9]+)$', views.EventDetail.as_view(), name='event-detail'),
+    url(r'^payments/$', views.PaymentList.as_view(), name='payment-list'),
+    url(r'payment/(?P<pk>[0-9]+)$', views.PaymentDetail.as_view(), name='payment-detail'),
 ]

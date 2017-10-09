@@ -86,8 +86,8 @@
                                     <a href="{% url 'dashboard:poll-list' %}"><span class="fa fa-child"></span>&nbsp; Polls</a>
                                 </li>
 
-                                <li {% if page_name == 'Equipments' %}class="active"{% endif %}>
-                                    <a href="#"><span class="fa fa-wrench"></span>&nbsp; Payments</a>
+                                <li {% if page_name == 'payments' %}class="active"{% endif %}>
+                                    <a href="{% url 'dashboard:payment-list' %}"><span class="fa fa-usd"></span>&nbsp; Payments</a>
                                 </li>
 
                                 <li {% if page_name == 'Equipments' %}class="active"{% endif %}>

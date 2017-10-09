@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block content %}
+<legend>{{ payment.title|title }}</legend>
+
+<section class="event-detail">
+    <dl>
+        <dt><span class="fa fa-calendar"></span>&nbsp; Payment Due Date</dt>
+        <dd>Before {{ payment.due_date|naturalday:'M d, Y' }}</dd>
+
+        <dt><span class="fa fa-usd"></span>&nbsp; Amount</dt>
+        <dd>ETB {{ payment.amount }}</dd>
+
+        <dt><span class="fa fa-pencil-square-o"></span>&nbsp; Description</dt>
+        <dd class="text-justify">{{ payment.description }}</dd>
+
+        <dt><span class="fa fa-bell"></span>&nbsp; Your Status</dt>
+        {% if student_payment %}
+        <dd><span class="text-success"><span class="fa fa-check-square-o"></span>&nbsp; PAID</span></dd>
+        {% else %}
+        <dd><span class="text-danger">PENDING</span></dd>
+        {% endif %}
+    </dl>
+    <br>
+
+    {% if student_payment %}
+    <p class="text-fade"><span class="fa fa-info-circle"></span>&nbsp; You have completed the required payment on {{ student_payment.payment_date|date:'M d, Y' }}. </p>
+    {% else %}
+    <p class="text-fade"><span class="fa fa-warning"></span>&nbsp; Please complete the required payment before the deadline.</p>
+    {% endif %}
+</section>
+
+{% if program_list %}
+<div class="panel panel-default breath-up-sm">
+    <div class="panel-heading">
+        Event Programs
+    </div>
+
+    <div class="panel-body">
+        <div class="table-responsive">
+            <table class="panel-table table table-stripped table-hover">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Program</th>
+                    <th>Starts</th>
+                    <th>Ends</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for program in program_list %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ program.title }}</td>
+                        <td>{{ program.start_at|date:'H:i A' }}</td>
+                        <td>{{ program.end_at|date:'H:i A' }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>               
+            </table>
+        </div><!-- /.table-responsive -->        
+    </div>
+</div>
+{% endif %}
+{% endblock content %}

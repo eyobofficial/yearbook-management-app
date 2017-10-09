@@ -16,6 +16,8 @@ from .models import (Yearbook,
                      Vote,
                      Event,
                      Program,
+                     Payment,
+                     StudentPayment,
                      )
 
 # Import Forms
@@ -293,3 +295,27 @@ class EventDetail(generic.DetailView):
         context['page_name'] = 'events'
         context['program_list'] = Program.objects.filter(event_id=self.kwargs['pk'])
         return context
+
+class PaymentList(generic.ListView):
+    model = Payment
+    queryset = Payment.objects.filter(publish=True)
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(PaymentList, self).get_context_data(*args, **kwargs)
+        context['page_name'] = 'payments'
+        return context
+
+class PaymentDetail(generic.DetailView):
+    model = Payment
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(PaymentDetail, self).get_context_data(*args, **kwargs)
+        context['page_name'] = 'payments'
+
+        try:
+            student_payment = StudentPayment.objects.get(payment_id=self.kwargs['pk'], student_id=self.request.user.id)
+        except:
+            student_payment = None
+
+        context['student_payment'] = student_payment
+        return context 
