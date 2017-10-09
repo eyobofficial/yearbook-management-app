@@ -26,9 +26,16 @@
             <dd>(No dress code is specified)</dd>
             {% endif %}
 
+            <dt><span class="fa fa-usd"></span>&nbsp; Entrance Fee</dt>
+            {% if event.fee %}
+            <dd>ETB {{ event.fee }}</dd>
+            {% else %}
+            <dd>Free</dd>
+            {% endif %}
+
             <dt><span class="fa fa-pencil-square-o"></span>&nbsp; Description</dt>
             {% if event.description %}
-            <dd>{{ event.description }}</dd>
+            <dd class="text-justify">{{ event.description }}</dd>
             {% else %}
             <dd>(No event description)</dd>
             {% endif %}
@@ -47,17 +54,36 @@
     </div>
 </section>
 
-<div class="panel panel-default">
+{% if program_list %}
+<div class="panel panel-default breath-up-sm">
     <div class="panel-heading">
         Event Programs
     </div>
 
     <div class="panel-body">
-        {% for program in program_list %}
-        <p>{{ program.title }}</p>
-        {% empty %}
-        <p>No Program</p>
-        {% endfor %}
+        <div class="table-responsive">
+            <table class="panel-table table table-stripped table-hover">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Program</th>
+                    <th>Starts</th>
+                    <th>Ends</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for program in program_list %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ program.title }}</td>
+                        <td>{{ program.start_at|date:'H:i A' }}</td>
+                        <td>{{ program.end_at|date:'H:i A' }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>               
+            </table>
+        </div><!-- /.table-responsive -->        
     </div>
 </div>
+{% endif %}
 {% endblock content %}

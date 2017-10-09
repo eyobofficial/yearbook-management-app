@@ -95,6 +95,7 @@ dl > dd {
 .header-info {
     text-transform: capitalize;
     font-size: 14px;
+    font-weight: 300;
 }
 
 .header-info > span.label {

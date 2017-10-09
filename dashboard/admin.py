@@ -40,5 +40,5 @@ class EventAdmin(admin.ModelAdmin):
 
 @admin.register(Program)
 class ProgramAdmin(admin.ModelAdmin):
-    list_display = ('event', 'title', 'start_at', 'end_at',)
+    list_display = ('title', 'event', 'start_at', 'end_at',)
     list_filter = ('event',)
