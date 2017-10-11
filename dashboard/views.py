@@ -303,6 +303,7 @@ class PaymentList(generic.ListView):
     def get_context_data(self, *args, **kwargs):
         context = super(PaymentList, self).get_context_data(*args, **kwargs)
         context['page_name'] = 'payments'
+        context['student_payments'] = Payment.student_payment_set.filter(student_id=self.request.user.id)
         return context
 
 class PaymentDetail(generic.DetailView):

@@ -1,10 +1,46 @@
 {% extends 'base.html' %}
+{% load humanize %}
 
 {% block content %}
-<legend>Payments</legend>
 {% for payment in payment_list %}
-<ul>
-    <li><a href="{% url 'dashboard:payment-detail' payment.id %}">{{ payment.title|title }}</a></li>
-</ul>
+    {{ payment.student_payment_set.all }}
 {% endfor %}
+<br>
+<legend>Payments</legend>
+{% if payment_list %}
+    <div class="panel panel-default panel-lg">
+        <div class="panel-heading">
+            Outstanding Payments
+        </div>
+
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table panel-table table-hover table-stripped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Payment</th>
+                            <th><span class="fa fa-calendar"></span>&nbsp; Due Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for payment in payment_list %}                            
+                        <tr>                           
+                           <td>{{ forloop.counter }}</td>
+                           <td><a href="{% url 'dashboard:payment-detail' payment.id %}">{{ payment.title|title }}</a></td>
+                           <td>{{ payment.due_date|naturalday:'M d, Y' }}</td>
+                           <td>PAID</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% else %}
+<div class="breath-up-md">
+    <p class="alert alert-success">There is currently no outstanding payments.</p>
+</div>
+{% endif %}
 {% endblock %}
