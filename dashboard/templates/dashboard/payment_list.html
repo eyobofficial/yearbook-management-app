@@ -2,11 +2,6 @@
 {% load humanize %}
 
 {% block content %}
-{% for payment in payment_list %}
-    {{ payment.student_payment_set.all }}
-{% endfor %}
-<br>
-<legend>Payments</legend>
 {% if payment_list %}
     <div class="panel panel-default panel-lg">
         <div class="panel-heading">
@@ -30,7 +25,11 @@
                            <td>{{ forloop.counter }}</td>
                            <td><a href="{% url 'dashboard:payment-detail' payment.id %}">{{ payment.title|title }}</a></td>
                            <td>{{ payment.due_date|naturalday:'M d, Y' }}</td>
-                           <td>PAID</td>
+                           {% if payment.id in student_payments %}
+                           <td class="text-success bold"><span class="fa fa-check-square-o"></span>&nbsp; PAID</td>
+                           {% else %}
+                           <td class="text-danger bold"><span class="fa fa-warning"></span>&nbsp; PENDING</td>
+                           {% endif %}
                         </tr>
                         {% endfor %}
                     </tbody>

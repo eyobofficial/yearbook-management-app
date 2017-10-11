@@ -28,6 +28,7 @@
                     <th>Poll</th>
                     <th>Status</th>
                     <th class="text-center">Deadline</th>
+                    <th></th>
                 </tr>
             </thead>
 
@@ -38,6 +39,11 @@
                     <td class="bold"><a href="{% url 'dashboard:poll-detail' poll.id %}">{{ poll.poll_text|capfirst }}</a></td>
                     <td>{% if poll.active %} <span class="badge badge-primary"> open </span> {% else %} <span class="badge badge-default"> closed </span> {% endif %}</td>
                     <td class="text-center"><span class="fa fa-calendar"></span>&nbsp; {{ poll.end_at|date:'M d, Y' }}</td>
+                    {% if poll.id in student_poll_list %}
+                    <td class="bold"><span class="fa fa-check-square-o"></span>&nbsp; Voted</td>
+                    {% else %}
+                    <td class="bold text-danger"><span class="fa fa-warning"></span>&nbsp; PENDING</td>
+                    {% endif %}
                 </tr>
                 {% endfor %}
             </tbody>

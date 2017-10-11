@@ -1,10 +1,36 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<legend>Upcoming Events</legend>
-{% for event in event_list %}
-<ul>
-    <li><a href="{% url 'dashboard:event-detail' event.id %}">{{ event.title|title }}</a></li>
-</ul>
-{% endfor %}
+{% if event_list %}
+    {% for event in event_list %}
+    <div class="panel panel-default panel-lg">
+        <div class="panel-heading">
+            Upcoming Events
+        </div>
+
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table panel-table table-hover table-stripped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Event</th>
+                            <th><span class="fa fa-calendar"></span>&nbsp; Date</th>
+                            <th><span class="fa fa-map-marker"></span>&nbsp; Venue</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><h3 class="text-md">{{ forloop.counter }}</h3></td>
+                            <td><h3 class="text-md"><a href="{% url 'dashboard:event-detail' event.id %}">{{ event.title|upper }}</a></h3></td>
+                            <td><h3 class="text-md">{{ event.event_datetime|date:'M d, Y' }}</h3></td>
+                            <td><h3 class="text-md">{{ event.venue|title }}</h3></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+{% endif %}
 {% endblock %}

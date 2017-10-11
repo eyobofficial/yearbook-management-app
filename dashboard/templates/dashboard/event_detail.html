@@ -2,7 +2,8 @@
 {% load humanize %}
 
 {% block content %}
-<legend>{{ event.title|title }}
+<h2 class="detail-heading">Events</h2>
+<legend class="heading-legend">{{ event.title|title }}
     <span class="header-info pull-right">
         <span class="label label-default">
             <span class="fa fa-calendar"></span>&nbsp; {{ event.event_datetime|date:'M d, Y' }}
@@ -19,7 +20,7 @@
             <dt><span class="fa fa-map-marker"></span>&nbsp; Venue</dt>
             <dd>Main Hall</dd>
 
-            <dt><span class="fa fa-user-secret"></span>&nbsp; Dress Code</dt>
+            <dt><span class="fa fa-male"></span>&nbsp; Dress Code</dt>
             {% if event.dress_code %}
             <dd>{{ event.dress_code }}</dd>
             {% else %}

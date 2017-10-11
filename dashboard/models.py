@@ -124,6 +124,16 @@ class Program(models.Model):
 
     def __str__(self):
         return '{} - ({} Event)'.format(self.title, self.event)
+        
+class StudentEvent(models.Model):
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    student = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ['event',]
+
+    def __str__(self):
+        return '{} going to {}'.format(self.event, self.student)
 
 class Payment(models.Model):
     title = models.CharField('Payment Title', max_length=100)

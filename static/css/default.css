@@ -78,6 +78,24 @@
 	color: gray !important;
 }
 
+.text-lg {
+	font-size: 1.4em !important;
+	font-weight: 400 !important;
+}
+
+.text-md {
+	font-size: 1.2em !important;
+	font-weight: 400 !important;
+}
+
+.text-normal {
+	font-size: 1em !important;
+	font-weight: normal !important;
+}
+
+.text-sm {
+	font-size: 0.8em !important;
+}
 
 .bold {
 	font-weight: bold !important;
@@ -104,6 +122,9 @@
 	background-color: #d9534f !important;
 }
 
+ul.list-inline-expanded li {
+    margin-right: 2.4em;
+}
 
 body {
 	font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
@@ -629,7 +650,7 @@ a.btn-danger,
 
 .panel-table thead th {
 	border-bottom: 1.4px solid #434857 !important;
-	font-weight: 600  !important;
+	font-weight: 500 !important;
 }
 
 .panel-table tbody td {
@@ -641,13 +662,6 @@ a.btn-danger,
 .panel-table tbody tr:last-child td {
 	border-bottom: none !important;
 }
-
-.panel-table tr.active td {
-	font-size: 16px !important;
-	font-weight: bold !important;
-	vertical-align: baseline;
-}
-
 
 .panel-heading a {
 	font-size: 11px !important;
@@ -757,6 +771,13 @@ legend {
 	text-transform: uppercase;
 	padding-bottom: 0.8em;
 	border-bottom:  1px solid #434857;
+}
+
+legend.heading-legend {
+	color: inherit;
+	font-size: 1.8em;
+	text-transform: capitalize;
+	margin-top: 0.6em;
 }
 
 

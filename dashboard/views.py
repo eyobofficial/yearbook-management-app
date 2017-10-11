@@ -178,6 +178,12 @@ class PollList(generic.ListView):
     def get_context_data(self, *args, **kwargs):
         context = super(PollList, self).get_context_data(*args, **kwargs)
         context['page_name'] = 'polls'
+        student_poll_list = []
+
+        for student_poll in Vote.objects.filter(student_id=self.request.user.id):
+            student_poll_list.append(student_poll.poll.id)
+
+        context['student_poll_list'] = student_poll_list
         context['active_poll_count'] = len(Poll.objects.filter(active=True))
         return context
 
@@ -303,7 +309,11 @@ class PaymentList(generic.ListView):
     def get_context_data(self, *args, **kwargs):
         context = super(PaymentList, self).get_context_data(*args, **kwargs)
         context['page_name'] = 'payments'
-        context['student_payments'] = Payment.student_payment_set.filter(student_id=self.request.user.id)
+        student_payments = []
+        for student_payment in StudentPayment.objects.filter(student_id=self.request.user.id):
+            student_payments.append(student_payment.payment.id)
+
+        context['student_payments'] = student_payments
         return context
 
 class PaymentDetail(generic.DetailView):

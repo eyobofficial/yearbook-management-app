@@ -7,6 +7,7 @@ from .models import (Yearbook, StudentYearbook,
                     Vote,
                     Event,
                     Program,
+                    StudentEvent,
                     Payment,
                     StudentPayment,
                     )
@@ -46,12 +47,17 @@ class ProgramAdmin(admin.ModelAdmin):
     list_display = ('title', 'event', 'start_at', 'end_at',)
     list_filter = ('event',)
 
+@admin.register(StudentEvent)
+class StudentEventAdmin(admin.ModelAdmin):
+    list_display = ('event', 'student', 'id',)
+    list_filter = ('event',)
+
 @admin.register(Payment)
 class PaymentAdmin(admin.ModelAdmin):
-    list_display = ('title', 'amount', 'due_date', 'publish', )
+    list_display = ('title', 'id', 'amount', 'due_date', 'publish', )
     list_filter = ('due_date', 'amount',)
 
 @admin.register(StudentPayment)
 class StudentPaymentAdmin(admin.ModelAdmin):
-    list_display = ('payment', 'student', 'payment_date', )
+    list_display = ('payment', 'id', 'student', 'payment_date', )
     list_filter = ('payment', 'student',)
