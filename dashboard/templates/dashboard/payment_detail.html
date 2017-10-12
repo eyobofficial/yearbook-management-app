@@ -2,8 +2,10 @@
 {% load humanize %}
 
 {% block content %}
-<h2 class="detail-heading">Payments</h2>
-<legend class="heading-legend">{{ payment.title|title }}</legend>
+<header id="detail-header">
+    <h2>Payments</h2>
+    <h3>{{ payment.title|title }}</h3>
+</header>
 
 <section class="event-detail">
     <dl>

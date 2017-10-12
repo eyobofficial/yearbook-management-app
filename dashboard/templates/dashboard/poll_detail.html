@@ -2,13 +2,10 @@
 {% load humanize %}
 
 {% block content %}
-<h2 class="detail-heading">Polls</h2>
-<legend class="heading-legend">Vote Now 
-  <span class="pull-right header-info">
-    <span class="fa fa-calendar"></span>
-      &nbsp; Deadline <span class="label label-default"> {{ poll.end_at|naturalday:'M d, Y' }}</span>
-    </span>
-</legend>
+<header id="detail-header">
+    <h2>Polls</h2>
+    <h3>Vote Now</h3>
+</header>
 
  <dl>
    <dt>Poll Question:</dt>

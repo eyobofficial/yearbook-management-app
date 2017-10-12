@@ -16,6 +16,7 @@ from .models import (Yearbook,
                      Vote,
                      Event,
                      Program,
+                     StudentEvent, 
                      Payment,
                      StudentPayment,
                      )
@@ -305,6 +306,9 @@ class EventDetail(generic.DetailView):
 class PaymentList(generic.ListView):
     model = Payment
     queryset = Payment.objects.filter(publish=True)
+
+    def post(self, *args, **kwargs):
+        pass
 
     def get_context_data(self, *args, **kwargs):
         context = super(PaymentList, self).get_context_data(*args, **kwargs)

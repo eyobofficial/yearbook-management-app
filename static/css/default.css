@@ -105,6 +105,12 @@
 	font-style: italic !important;
 }
 
+.badge {
+	font-size: 1em;
+	font-weight: 600;
+	padding: 6px 10px;
+}
+
 .badge-primary {
 	background-color: #1ab394 !important;
 }

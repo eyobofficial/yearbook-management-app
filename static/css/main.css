@@ -129,10 +129,30 @@ dl > dd {
     margin-top: 4.6em;
 }
 
-.detail-heading {
+/************ Detail Page Headers *****************/
+#detail-header {
+    border-bottom:  1px solid #434857;
+    margin-bottom: 1.8em;
+    margin-top: 0 !important;
+}
+
+#detail-header h2 {
     color: #737373;
-    color: gray;
     text-transform: uppercase;
     font-size: 1.1em;
     font-weight: 300 !important;
+    margin-top: 0 !important;
+}
+
+#detail-header h3 {
+    color: inherit;
+    font-size: 1.8em;
+    font-weight: 400;
+    padding-bottom: 0.1em;
+    text-transform: capitalize;
+    margin-top: 0.4em;
+}
+
+#detail-header button.btn {
+    margin-top: 1em;
 }
