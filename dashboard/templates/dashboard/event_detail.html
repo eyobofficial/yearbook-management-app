@@ -10,7 +10,17 @@
         </div>
 
         <div class="col-sm-6">
-            <button type="button" class="btn btn-lg btn-primary pull-right">Subscribe</button>
+            <form action="{% url 'dashboard:event-subscribe' %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="event_id" value="{{ event.id }}">
+            <button type="submit" class="btn btn-lg btn-primary pull-right">
+                {% if event_subscription %}
+                <span class="fa fa-check"></span>&nbsp; Attending
+                {% else %}
+                Attend Event
+                {% endif %}
+            </button>
+            </form>
         </div>
     </div>
 </header>

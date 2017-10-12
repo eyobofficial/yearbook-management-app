@@ -17,14 +17,20 @@
                             <th>Event</th>
                             <th><span class="fa fa-calendar"></span>&nbsp; Date</th>
                             <th><span class="fa fa-map-marker"></span>&nbsp; Venue</th>
+                            <th><span class="fa fa-group"></span>&nbsp; Attending</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td><h3 class="text-md">{{ forloop.counter }}</h3></td>
-                            <td><h3 class="text-md"><a href="{% url 'dashboard:event-detail' event.id %}">{{ event.title|upper }}</a></h3></td>
-                            <td><h3 class="text-md">{{ event.event_datetime|date:'M d, Y' }}</h3></td>
-                            <td><h3 class="text-md">{{ event.venue|title }}</h3></td>
+                            <td class="text-md">{{ forloop.counter }}</td>
+                            <td class="text-md"><a href="{% url 'dashboard:event-detail' event.id %}">{{ event.title|upper }}</a></td>
+                            <td class="text-md">{{ event.event_datetime|date:'M d, Y' }}</td>
+                            <td class="text-md">{{ event.venue|title }}</td>
+                            {% for subscription in subscription_list %}
+                                {% if subscription.0 == event.id %}
+                                <td><span class="label label-primary">{{ subscription.1 }} Students</span></td>
+                                {% endif %}
+                            {% endfor %}
                         </tr>
                     </tbody>
                 </table>

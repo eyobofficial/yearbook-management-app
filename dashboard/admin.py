@@ -7,7 +7,7 @@ from .models import (Yearbook, StudentYearbook,
                     Vote,
                     Event,
                     Program,
-                    StudentEvent,
+                    EventSubscription,
                     Payment,
                     StudentPayment,
                     )
@@ -47,8 +47,8 @@ class ProgramAdmin(admin.ModelAdmin):
     list_display = ('title', 'event', 'start_at', 'end_at',)
     list_filter = ('event',)
 
-@admin.register(StudentEvent)
-class StudentEventAdmin(admin.ModelAdmin):
+@admin.register(EventSubscription)
+class EventSubscriptionAdmin(admin.ModelAdmin):
     list_display = ('event', 'student', 'id',)
     list_filter = ('event',)
 

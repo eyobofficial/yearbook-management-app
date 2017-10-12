@@ -125,7 +125,7 @@ class Program(models.Model):
     def __str__(self):
         return '{} - ({} Event)'.format(self.title, self.event)
         
-class StudentEvent(models.Model):
+class EventSubscription(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     student = models.ForeignKey(User, on_delete=models.CASCADE)
 

@@ -16,7 +16,7 @@ from .models import (Yearbook,
                      Vote,
                      Event,
                      Program,
-                     StudentEvent, 
+                     EventSubscription, 
                      Payment,
                      StudentPayment,
                      )
@@ -291,17 +291,53 @@ class EventList(generic.ListView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(EventList, self).get_context_data(*args, **kwargs)
+        subscription_list = []
+
+        for event in Event.objects.filter(publish=True):
+            subscription_count = EventSubscription.objects.filter(event_id=event.id).count()
+            event_subscription = (event.id, subscription_count)
+            subscription_list.append(event_subscription)
+        
+        context['subscription_list'] = subscription_list
+        context['event_subscription'] = EventSubscription.objects.all()
         context['page_name'] = 'events'
-        return context 
+        return context
 
 class EventDetail(generic.DetailView):
     model = Event
 
+    def form_valid(self, *args, **kwargs):
+        return super(EventDetail, self).post(*args, **kwargs)
+
     def get_context_data(self, *args, **kwargs):
         context = super(EventDetail, self).get_context_data(*args, **kwargs)
         context['page_name'] = 'events'
+        try:
+            event_subscription = EventSubscription.objects.get(event_id=self.kwargs['pk'], student_id=self.request.user.id)
+        except:
+            event_subscription = None
+
+        context['event_subscription'] = event_subscription
         context['program_list'] = Program.objects.filter(event_id=self.kwargs['pk'])
         return context
+
+def subscribe_to_event(request):
+    if request.method == 'GET':
+        return redirect('dashboard:event-list')
+    else:
+        event_id = int(request.POST['event_id'])
+
+        try:
+            subscription_status = EventSubscription.objects.get(event_id=event_id, student_id=request.user.id)
+        except:
+            subscription_status = None
+
+        if subscription_status is None:
+            subscribe = EventSubscription(student_id=request.user.id, event_id=event_id)
+            subscribe.save()
+        else:
+            subscription_status.delete()
+        return redirect('dashboard:event-detail', pk=event_id)
 
 class PaymentList(generic.ListView):
     model = Payment

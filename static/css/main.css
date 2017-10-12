@@ -156,3 +156,7 @@ dl > dd {
 #detail-header button.btn {
     margin-top: 1em;
 }
+
+.label {
+    padding: 1em 1.2em;
+}
