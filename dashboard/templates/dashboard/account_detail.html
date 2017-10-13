@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 <header id="detail-header">
@@ -9,7 +10,7 @@
         </div>
 
         <div class="col-sm-6">
-            <a href="#" class="pull-right btn btn-lg btn-primary"><span class="fa fa-edit"></span>&nbsp; Update</a>
+            <a href="{% url 'dashboard:account-update' %}" class="pull-right btn btn-lg btn-primary"><span class="fa fa-edit"></span>&nbsp; Update Detail</a>
         </div>
     </div>
 </header>
@@ -33,6 +34,25 @@
         {% endif %}
     </dl>
     <br>
+</section>
+
+<header id="detail-header">
+    <h3>Profile Picture</h3>
+</header>
+
+<section>
+    <div id="profile-pic-container">
+        {% if user.profile.profile_photo %}
+        <img src="{{ user.profile.profile_photo.url }}" alt="Profile Photo" width="180" class="breath-up-xs img-thumbnail">
+        {% else %}
+        <img src="/media/defaults/default_profile_photo.jpg" alt="Profile Photo" width="180" class="breath-up-xs img-thumbnail">
+        {% endif %}
+    </div>
+    <form action="{% url 'dashboard:change-photo' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form|crispy}}
+        <button type="submit" class="btn btn-lg btn-primary">Update Photo</button>
+    </form>
 </section>
 
 {% endblock content %}

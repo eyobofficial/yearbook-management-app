@@ -19,4 +19,6 @@ urlpatterns = [
     url(r'^payments/$', views.PaymentList.as_view(), name='payment-list'),
     url(r'payment/(?P<pk>[0-9]+)$', views.PaymentDetail.as_view(), name='payment-detail'),
     url(r'^account/$', views.AccountDetail.as_view(), name='account-detail'),
+    url(r'^account/update/$', views.account_update, name='account-update'),
+    url(r'^account/change_photo/$', views.change_profile_photo, name='change-photo'),
 ]

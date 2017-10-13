@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<header id="detail-header">
+    <h2>Account</h2>
+    <h3>Update Details</h3>
+</header>
+
+<section class="account-detail">
+    <form action="{% url 'dashboard:account-update' %}" method="POST">
+        {% csrf_token %}
+        {{ form|crispy }}
+
+        <br>
+
+        <div class="form-group">
+            <a href="{% url 'dashboard:account-detail' %}" class="btn btn-lg btn-danger">Cancel</a>
+            <button type="submit" class="btn btn-lg btn-primary">Update</button>
+        </div>
+    </form>
+</section>
+{% endblock content %}

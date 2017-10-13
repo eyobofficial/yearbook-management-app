@@ -27,6 +27,7 @@ from dashboard.forms import (SignupForm,
                              YearbookSubmitForm,
                              PollForm,
                              UserAccountForm,
+                             ProfilePhotoForm,
                              )
 
 # Signup view
@@ -70,6 +71,7 @@ def index(request):
             'page_name': 'index',
         })
 
+@login_required
 def yearbook(request):
     try:
         yearbook_detail = StudentYearbook.objects.get(student=request.user)
@@ -87,6 +89,7 @@ def yearbook(request):
                     'page_name': 'yearbook',
                 })
 
+@login_required
 def yearbook_create(request):
     try:
         yearbook_detail = StudentYearbook.objects.get(student=request.user)
@@ -117,6 +120,7 @@ def yearbook_create(request):
                 'page_name': 'yearbook',
             })
 
+@login_required
 def yearbook_update(request):
     try:
         yearbook_detail = StudentYearbook.objects.get(student=request.user)
@@ -144,6 +148,7 @@ def yearbook_update(request):
                     'page_name': 'yearbook',
                 }) 
 
+@login_required
 def yearbook_submit(request):
     try:
         yearbook_detail = StudentYearbook.objects.get(student=request.user)
@@ -174,7 +179,7 @@ def yearbook_submit(request):
                 'page_name': 'yearbook',
             })
 
-class PollList(generic.ListView):
+class PollList(LoginRequiredMixin, generic.ListView):
     model = Poll
 
     def get_context_data(self, *args, **kwargs):
@@ -189,6 +194,7 @@ class PollList(generic.ListView):
         context['active_poll_count'] = len(Poll.objects.filter(active=True))
         return context
 
+@login_required
 def poll_detail(request, pk):
     # Get a particular poll 
     try:
@@ -233,6 +239,7 @@ def poll_detail(request, pk):
             'choice_list': choice_list, 
         })
 
+@login_required
 def poll_result(request, pk):
     # Get a particular poll 
     try:
@@ -284,7 +291,7 @@ def poll_result(request, pk):
             'choice_polls': choice_polls,
         })
 
-class EventList(generic.ListView):
+class EventList(LoginRequiredMixin, generic.ListView):
     model = Event
 
     def get_queryset(self, *args, **kwargs):
@@ -304,7 +311,7 @@ class EventList(generic.ListView):
         context['page_name'] = 'events'
         return context
 
-class EventDetail(generic.DetailView):
+class EventDetail(LoginRequiredMixin, generic.DetailView):
     model = Event
 
     def form_valid(self, *args, **kwargs):
@@ -322,6 +329,7 @@ class EventDetail(generic.DetailView):
         context['program_list'] = Program.objects.filter(event_id=self.kwargs['pk'])
         return context
 
+@login_required
 def subscribe_to_event(request):
     if request.method == 'GET':
         return redirect('dashboard:event-list')
@@ -340,7 +348,7 @@ def subscribe_to_event(request):
             subscription_status.delete()
         return redirect('dashboard:event-detail', pk=event_id)
 
-class PaymentList(generic.ListView):
+class PaymentList(LoginRequiredMixin, generic.ListView):
     model = Payment
     queryset = Payment.objects.filter(publish=True)
 
@@ -357,7 +365,7 @@ class PaymentList(generic.ListView):
         context['student_payments'] = student_payments
         return context
 
-class PaymentDetail(generic.DetailView):
+class PaymentDetail(LoginRequiredMixin, generic.DetailView):
     model = Payment
 
     def get_context_data(self, *args, **kwargs):
@@ -372,10 +380,51 @@ class PaymentDetail(generic.DetailView):
         context['student_payment'] = student_payment
         return context
 
-class AccountDetail(generic.TemplateView):
+class AccountDetail(LoginRequiredMixin, generic.TemplateView):
     template_name = 'dashboard/account_detail.html'
 
-    def get_context_date(self, *args, **kwargs):
-        context = super(AccountDetail, self).get_context_date(*args, **kwargs)
-        context['page_name'] = 'account'
+    def get_context_data(self, *args, **kwargs):
+        context = super(AccountDetail, self).get_context_data(*args, **kwargs)
+        context['page_name'] = 'account' 
+        context['form'] = ProfilePhotoForm
         return context
+
+@login_required
+def change_profile_photo(request):
+    form_class =  ProfilePhotoForm
+
+    if request.method == 'POST':
+        form =  form_class(request.POST, request.FILES, instance=request.user.profile)
+
+        if form.is_valid():
+            form.instance.user = request.user
+            form.save()
+            return redirect('dashboard:account-detail')
+    else:
+        form = form_class(instance=request.user.profile)
+    return render(request, 'dashboard/account_detail.html', {
+            'form': form,
+        })
+
+@login_required
+def account_update(request):
+    account_form_class = UserAccountForm
+    profile_form_class = ProfilePhotoForm
+    template_name = 'dashboard/account_update2.html'
+
+    if request.method == 'POST':
+        account_form = account_form_class(request.POST, instance=request.user)
+        profile_form = profile_form_class(request.POST, request.FILES, instance=request.user.profile)
+
+        if account_form.is_valid() and profile_form.is_valid():
+            account_form.save()
+            profile_form.save()
+            return redirect('dashboard:account-detail')
+    else:
+        account_form = account_form_class(instance=request.user)
+        profile_form = profile_form_class(instance=request.user)
+    return render(request, template_name, {
+            'page_name': 'account',
+            'account_form': account_form,
+            'profile_form': profile_form,
+        })

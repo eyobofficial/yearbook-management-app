@@ -67,17 +67,7 @@ class UserAccountForm(forms.ModelForm):
         model = User
         fields = ['first_name', 'last_name', 'email',]
 
-        def __init__(self, *args, **kwargs):
-            self.helper = FormHelper()
-            self.helper.layout = Layout(
-                        Fieldset(
-                            '<span class="fa fa-user-circle"></span>&nbsp; Student Details',
-                            'first_name',
-                            'last_name',
-                            'email',
-                        ),
-                        ButtonHolder(
-                            Submit('submit', 'Update Profile', css_class='btn btn-lg btn-primary')
-                        )
-                    )
-            super(UserAccountForm, self).__init__(*args, **kwargs)
+class ProfilePhotoForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('profile_photo',)
