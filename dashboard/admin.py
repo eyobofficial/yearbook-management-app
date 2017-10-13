@@ -1,16 +1,23 @@
 from django.contrib import admin
 
 # Import models
-from .models import (Yearbook, StudentYearbook,
-                    Poll,
-                    PollChoice,
-                    Vote,
-                    Event,
-                    Program,
-                    EventSubscription,
-                    Payment,
-                    StudentPayment,
+from .models import (Profile, 
+                     Yearbook, 
+                     StudentYearbook,
+                     Poll,
+                     PollChoice,
+                     Vote,
+                     Event,
+                     Program,
+                     EventSubscription,
+                     Payment,
+                     StudentPayment,
                     )
+
+@admin.register(Profile)
+class ProfileAdmin(admin.ModelAdmin):
+    list_display = ('user', 'is_committee',)
+    list_filter  = ('is_committee',)
 
 @admin.register(Yearbook)
 class YearbookAdmin(admin.ModelAdmin):

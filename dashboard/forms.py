@@ -5,8 +5,12 @@ from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit
 # Import user authentication forms
 from django.contrib.auth.forms import UserCreationForm
 
+# Import Auth Models
+from django.contrib.auth.models import User
+
 # Import models
-from .models import (StudentYearbook,
+from .models import (Profile,
+                     StudentYearbook,
                      Poll,
                      PollChoice,
                      Vote,
@@ -57,3 +61,23 @@ class PollForm(forms.ModelForm):
     class Meta:
         model = Poll 
         fields = ('poll_text', 'description',)
+
+class UserAccountForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email',]
+
+        def __init__(self, *args, **kwargs):
+            self.helper = FormHelper()
+            self.helper.layout = Layout(
+                        Fieldset(
+                            '<span class="fa fa-user-circle"></span>&nbsp; Student Details',
+                            'first_name',
+                            'last_name',
+                            'email',
+                        ),
+                        ButtonHolder(
+                            Submit('submit', 'Update Profile', css_class='btn btn-lg btn-primary')
+                        )
+                    )
+            super(UserAccountForm, self).__init__(*args, **kwargs)

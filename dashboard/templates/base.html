@@ -94,8 +94,8 @@
                                     <a href="{% url 'dashboard:payment-list' %}"><span class="fa fa-usd"></span>&nbsp; Payments</a>
                                 </li>
 
-                                <li {% if page_name == 'Equipments' %}class="active"{% endif %}>
-                                    <a href="#"><span class="fa fa-wrench"></span>&nbsp; Settings</a>
+                                <li {% if page_name == 'account' %}class="active"{% endif %}>
+                                    <a href="{% url 'dashboard:account-detail' %}"><span class="fa fa-wrench"></span>&nbsp; Account</a>
                                 </li>
 
                             </ul>

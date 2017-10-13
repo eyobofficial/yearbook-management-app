@@ -18,4 +18,5 @@ urlpatterns = [
     url(r'^subscribe/$', views.subscribe_to_event, name='event-subscribe'),
     url(r'^payments/$', views.PaymentList.as_view(), name='payment-list'),
     url(r'payment/(?P<pk>[0-9]+)$', views.PaymentDetail.as_view(), name='payment-detail'),
+    url(r'^account/$', views.AccountDetail.as_view(), name='account-detail'),
 ]

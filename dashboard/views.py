@@ -26,6 +26,7 @@ from dashboard.forms import (SignupForm,
                              YearbookForm, 
                              YearbookSubmitForm,
                              PollForm,
+                             UserAccountForm,
                              )
 
 # Signup view
@@ -369,4 +370,12 @@ class PaymentDetail(generic.DetailView):
             student_payment = None
 
         context['student_payment'] = student_payment
-        return context 
+        return context
+
+class AccountDetail(generic.TemplateView):
+    template_name = 'dashboard/account_detail.html'
+
+    def get_context_date(self, *args, **kwargs):
+        context = super(AccountDetail, self).get_context_date(*args, **kwargs)
+        context['page_name'] = 'account'
+        return context

@@ -10,6 +10,7 @@ def profile_photo_path(instance, filename):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    is_committee = models.BooleanField(default=False)
     profile_photo = models.ImageField(upload_to=profile_photo_path, default='defaults/default_profile_photo.jpg')
 
 @receiver(post_save, sender=User)

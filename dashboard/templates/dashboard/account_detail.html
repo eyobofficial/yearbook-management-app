@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<header id="detail-header">
+    <div class="row">
+        <div class="col-sm-6">
+            <h2>Account</h2>
+            <h3>Account Details</h3>
+        </div>
+
+        <div class="col-sm-6">
+            <a href="#" class="pull-right btn btn-lg btn-primary"><span class="fa fa-edit"></span>&nbsp; Update</a>
+        </div>
+    </div>
+</header>
+
+<section class="account-detail">
+    <dl>
+        <dt><span class="fa fa-user"></span>&nbsp; First Name</dt>
+        <dd>{{ user.first_name }}</dd>
+
+        <dt><span class="fa fa-user"></span>&nbsp; Last Name</dt>
+        <dd>{{ user.last_name }}</dd>
+
+        <dt><span class="fa fa-envelope"></span>&nbsp; Email</dt>
+        <dd>{{ user.email }}</dd>
+
+        <dt><span class="fa fa-user"></span>&nbsp; Account Type</dt>
+        {% if user.profile.is_committee %}
+        <dd>Committee</dd>
+        {% else %}
+        <dd>Student</dd>
+        {% endif %}
+    </dl>
+    <br>
+</section>
+
+{% endblock content %}
