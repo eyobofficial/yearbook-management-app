@@ -1,6 +1,25 @@
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+# Callable for naming student profile photo
+def profile_photo_path(instance, filename):
+    return 'profile_photos/{}/{}'.format(instance.user.id, 'profile_photo.jpg')
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    profile_photo = models.ImageField(upload_to=profile_photo_path, default='defaults/default_profile_photo.jpg')
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()
 
 class Yearbook(models.Model):
     title = models.CharField(max_length=100, unique=True)

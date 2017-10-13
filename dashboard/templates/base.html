@@ -58,7 +58,11 @@
                     <div id="account-container" class="section-container navbar-fixed-side">
                         <section class="hr-bottom">
                             <div id="profile-pic-container">
-                                <img src="{% static 'img/dummy_profile_pic.jpg' %}" alt="Profile Photo" width="180" class="breath-up-xs img-thumbnail">
+                                {% if user.profile.profile_photo %}
+                                <img src="{{ user.profile.profile_photo.url }}" alt="Profile Photo" width="180" class="breath-up-xs img-thumbnail">
+                                {% else %}
+                                <img src="/media/defaults/default_profile_photo.jpg" alt="Profile Photo" width="180" class="breath-up-xs img-thumbnail">
+                                {% endif %}
                             </div>
 
                             <h2 class="h4 breath-up-sm"><span class="fa fa-user"></span> &nbsp; {{ user.get_full_name|title }}</h2>
