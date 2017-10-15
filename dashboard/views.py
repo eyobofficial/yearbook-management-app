@@ -410,7 +410,7 @@ def change_profile_photo(request):
 def account_update(request):
     account_form_class = UserAccountForm
     profile_form_class = ProfilePhotoForm
-    template_name = 'dashboard/account_update2.html'
+    template_name = 'dashboard/account_update.html'
 
     if request.method == 'POST':
         account_form = account_form_class(request.POST, instance=request.user)

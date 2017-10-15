@@ -8,10 +8,10 @@
 </header>
 
 <section class="account-detail">
-    <form action="{% url 'dashboard:account-update' %}" method="POST">
+    <form action="{% url 'dashboard:account-update' %}" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form|crispy }}
-
+        {{ account_form|crispy }}
+        {{ profile_form|crispy }}
         <br>
 
         <div class="form-group">
