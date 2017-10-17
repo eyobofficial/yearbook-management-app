@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<header id="detail-header">
+    <h2>Events</h2>
+    <h3>Add Event</h3>
+</header>
+
+<section>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form|crispy }}
+    </form>
+</section>
+{% endblock content %}

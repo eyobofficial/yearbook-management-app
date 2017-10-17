@@ -80,7 +80,7 @@ class Poll(models.Model):
         return self.poll_text
 
     def get_absolute_url(self):
-        return reverse(url='dashboard:poll-detail', kwargs={'pk': str(self.pk)})
+        return reverse('dashboard:poll-detail', kwargs={'pk': str(self.pk)})
 
 class PollChoice(models.Model):
     poll = models.ForeignKey(Poll, on_delete=models.CASCADE)

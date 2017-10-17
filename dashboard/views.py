@@ -5,7 +5,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormVi
 # Import user authentication modules
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User, Group
-from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.decorators import login_required, permission_required, user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
 
 # Import Models
@@ -29,6 +29,10 @@ from dashboard.forms import (SignupForm,
                              UserAccountForm,
                              ProfilePhotoForm,
                              )
+
+# Check if user is committee
+def check_committee(user):
+    return user.profile.is_committee
 
 # Signup view
 def signup(request):
@@ -239,6 +243,19 @@ def poll_detail(request, pk):
             'choice_list': choice_list, 
         })
 
+class PollCreate(UserPassesTestMixin, CreateView):
+    model = Poll
+    fields = ('poll_text', 'description', 'end_at', 'active',)
+    template_name = 'dashboard/poll_create_form.html'
+
+    def test_func(self):
+        return self.request.user.profile.is_committee
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(PollCreate, self).get_context_data(*args, **kwargs)
+        context['page_name'] = 'polls'
+        return context 
+
 @login_required
 def poll_result(request, pk):
     # Get a particular poll 
@@ -329,6 +346,18 @@ class EventDetail(LoginRequiredMixin, generic.DetailView):
         context['program_list'] = Program.objects.filter(event_id=self.kwargs['pk'])
         return context
 
+class EventCreate(UserPassesTestMixin, CreateView):
+    model = Event 
+    fields = ('title', 'description', 'venue', 'event_datetime', 'dress_code', 'fee', 'event_photo', 'publish',)
+    
+    def test_func(self):
+        return self.request.user.profile.is_committee
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(EventCreate, self).get_context_data(*args, **kwargs)
+        context['page_name'] = 'events'
+        return context 
+
 @login_required
 def subscribe_to_event(request):
     if request.method == 'GET':
@@ -378,6 +407,18 @@ class PaymentDetail(LoginRequiredMixin, generic.DetailView):
             student_payment = None
 
         context['student_payment'] = student_payment
+        return context
+
+class PaymentCreate(UserPassesTestMixin, generic.CreateView):
+    model = Payment 
+    fields = ('title', 'description', 'amount', 'due_date', 'publish',)
+
+    def test_func(self, *args, **kwargs):
+        return self.request.user.profile.is_committee
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(PaymentCreate, self).get_context_data(*args, **kwargs)
+        context['page_name'] = 'payments'
         return context
 
 class AccountDetail(LoginRequiredMixin, generic.TemplateView):
