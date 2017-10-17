@@ -36,7 +36,7 @@
                 {% for poll in poll_list %}
                 <tr>
                     <td>{{ forloop.counter }}</td>
-                    <td class="bold"><a href="{% url 'dashboard:poll-detail' poll.id %}">{{ poll.poll_text|capfirst }}</a></td>
+                    <td class="bold"><a href="{% url 'dashboard:poll-vote' poll.id %}">{{ poll.poll_text|capfirst }}</a></td>
                     <td>{% if poll.active %} <span class="badge badge-primary"> open </span> {% else %} <span class="badge badge-default"> closed </span> {% endif %}</td>
                     <td class="text-center"><span class="fa fa-calendar"></span>&nbsp; {{ poll.end_at|date:'M d, Y' }}</td>
                     {% if poll.id in student_poll_list %}

@@ -4,7 +4,7 @@
 {% block content %}
 <header id="detail-header">
     <h2>Polls</h2>
-    <h3>Add Poll</h3>
+    <h3>Add New Poll</h3>
 </header>
 
 <section>
@@ -12,6 +12,7 @@
         {% csrf_token %}
         {{ form|crispy }}
 
+        <br>
         <div class="form-group">
             <button type="submit" class="btn btn-lg btn-primary"> Add </button> &nbsp; &nbsp;
             <a href="{% url 'dashboard:payment-list' %}" class="btn btn-lg btn-danger">Cancel</a>

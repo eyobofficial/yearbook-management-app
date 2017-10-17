@@ -199,7 +199,7 @@ class PollList(LoginRequiredMixin, generic.ListView):
         return context
 
 @login_required
-def poll_detail(request, pk):
+def vote(request, pk):
     # Get a particular poll 
     try:
         poll = Poll.objects.get(pk=pk)
@@ -238,7 +238,7 @@ def poll_detail(request, pk):
         if poll.active is False:
             # Voting is closed
             return redirect('dashboard:poll-result', pk=poll.id)
-    return render(request, 'dashboard/poll_detail.html', {
+    return render(request, 'dashboard/vote_form.html', {
             'poll': poll,
             'choice_list': choice_list, 
         })
@@ -254,6 +254,7 @@ class PollCreate(UserPassesTestMixin, CreateView):
     def get_context_data(self, *args, **kwargs):
         context = super(PollCreate, self).get_context_data(*args, **kwargs)
         context['page_name'] = 'polls'
+        context['subpage_name'] = 'add poll'
         return context 
 
 @login_required
@@ -276,7 +277,7 @@ def poll_result(request, pk):
 
     if user_vote is None and poll.active:
         # i.e. User have not votted yet and poll is currently active (i.e. votting still ongoing)
-        return redirect('dashboard:poll-detail', pk=poll.id)
+        return redirect('dashboard:poll-vote', pk=poll.id)
     
     total_vote = Vote.objects.filter(poll_id=pk).count()
     choice_list = PollChoice.objects.filter(poll_id=pk)
@@ -307,6 +308,17 @@ def poll_result(request, pk):
             'choice_list': choice_list,
             'choice_polls': choice_polls,
         })
+
+class PollDetail(UserPassesTestMixin, generic.DetailView):
+    model = Poll 
+
+    def test_func(self, *args, **kwargs):
+        return self.request.user.profile.is_committee
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(PollDetail, self).get_context_data(*args, **kwargs)
+        context['page_name'] = 'polls'
+        return context
 
 class EventList(LoginRequiredMixin, generic.ListView):
     model = Event
@@ -356,6 +368,7 @@ class EventCreate(UserPassesTestMixin, CreateView):
     def get_context_data(self, *args, **kwargs):
         context = super(EventCreate, self).get_context_data(*args, **kwargs)
         context['page_name'] = 'events'
+        context['subpage_name'] = 'add event'
         return context 
 
 @login_required
@@ -419,6 +432,7 @@ class PaymentCreate(UserPassesTestMixin, generic.CreateView):
     def get_context_data(self, *args, **kwargs):
         context = super(PaymentCreate, self).get_context_data(*args, **kwargs)
         context['page_name'] = 'payments'
+        context['subpage_name'] = 'add payment'
         return context
 
 class AccountDetail(LoginRequiredMixin, generic.TemplateView):

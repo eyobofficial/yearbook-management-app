@@ -80,14 +80,14 @@
 
                                 <li {% if page_name == 'events' %}class="active"{% endif %}>
                                     <a href="{% url 'dashboard:event-list' %}"><span class="fa fa-cube"></span>&nbsp; Events</a>
-                                </li>
                                     {% if page_name == 'events' and user.profile.is_committee %}
                                     <ul class="secondary-menu">
-                                        <li>
-                                            <a href="{% url 'dashboard:event-create' %}"> New</a>
+                                        <li {% if subpage_name == 'add event' %} class="active" {% endif %}>
+                                            <span class="fa fa-angle-right"></span>&nbsp; <a href="{% url 'dashboard:event-create' %}"> add new</a>
                                         </li>
                                     </ul>
                                     {% endif %}
+                                </li>
 
                                  <li {% if page_name == 'Materials' %}class="active"{% endif %}>
                                     <a href="#"><span class="fa fa-cube"></span>&nbsp; Calendar</a>
@@ -96,9 +96,9 @@
                                 <li {% if page_name == 'polls' %}class="active"{% endif %}>
                                     <a href="{% url 'dashboard:poll-list' %}"><span class="fa fa-child"></span>&nbsp; Polls</a>
                                     {% if page_name == 'polls' and user.profile.is_committee %}
-                                    <ul>
-                                        <li>
-                                            <a href="{% url 'dashboard:poll-create' %}"> New</a>
+                                    <ul class="secondary-menu">
+                                        <li {% if subpage_name == 'add poll' %} class="active" {% endif %}>
+                                            <span class="fa fa-angle-right"></span>&nbsp; <a href="{% url 'dashboard:poll-create' %}"> add new</a>
                                         </li>
                                     </ul>
                                     {% endif %}
@@ -107,9 +107,9 @@
                                 <li {% if page_name == 'payments' %}class="active"{% endif %}>
                                     <a href="{% url 'dashboard:payment-list' %}"><span class="fa fa-usd"></span>&nbsp; Payments</a>
                                     {% if page_name == 'payments' and user.profile.is_committee %}
-                                    <ul>
-                                        <li>
-                                            <a href="{% url 'dashboard:payment-create' %}"> New</a>
+                                    <ul class="secondary-menu">
+                                        <li {% if subpage_name == 'add payment' %} class="active" {% endif %}>
+                                             <span class="fa fa-angle-right"></span>&nbsp; <a href="{% url 'dashboard:payment-create' %}"> add new</a>
                                         </li>
                                     </ul>
                                     {% endif %}

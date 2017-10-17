@@ -588,32 +588,35 @@ a.btn-danger,
 	margin-bottom: 1.8em;
 }
 
-#side-nav ul.primary-menu > li.active {
+#side-nav ul.primary-menu > li.active > a {
+	display: block;
+	width: 100%;
 	padding: 0.8em 0.2em 0.8em 0.6em;
 	border-radius: 2px;
     background: #23c6c8 !important;
 }
 
-#side-nav ul.primary-menu > li.active a {
+#side-nav ul.primary-menu > li.active > a {
     color: #fff !important;
     font-weight: 500;
 }
 
 #side-nav ul.secondary-menu {
-	padding-left: 2em;
+	margin-top: 1em;
+	padding-left: 1em;
+	list-style-type: none;
 }
 
-#side-nav ul.secondary-menu li {
-	margin-bottom: 0.8em;
-}
-
+#side-nav ul.secondary-menu > li, 
 #side-nav ul.secondary-menu > li > a {
-	color: #999 !important;
+	color: gray !important;
 }
 
 #side-nav ul.secondary-menu li.active > a,
 #side-nav ul.secondary-menu li > a:hover {
-	color: #F0AD4E !important;
+	color: #fff !important;
+	font-weight: 500;
+	transition: 0.4s all;
 }
 
 
