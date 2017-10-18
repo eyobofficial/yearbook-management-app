@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
-{% load humanize %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 <header id="detail-header">
     <h2>Polls</h2>
-    <h3>Poll Detail</h3>
+    <h3>Add Choice</h3>
 </header>
 
  <dl>
@@ -33,12 +33,22 @@
          {% else %}
          <p class="dd">(No choices are added yet)</p>
          {% endif %}
-         <br>
-         <div>
-            <a href="{% url 'dashboard:choice-create' poll.id %}"><span class="fa fa-plus"></span> Add New Choice</a> &nbsp; &nbsp;
-            <a href="#" class="btn btn-primary">Vote Now</a>
-         </div>
      </div>
  </div><!-- /.row -->
+
+ <div class="row">
+   <div class="col-sm-6">
+     <h4 class="dt">Add Choice</h4>
+     <form method="POST">
+       {% csrf_token %}
+       {{ form|crispy }}
+       <br>
+       <div class="form-group">
+         <button type="submit" class="btn btn-lg btn-primary">Add</button>&nbsp;&nbsp; 
+         <a href="{% url 'dashboard:poll-detail' poll.id %}" class="btn btn-danger btn-lg"> Cancel </a>
+       </div>
+     </form>
+   </div>
+ </div>
  
 {% endblock content %}

@@ -337,6 +337,30 @@ class PollDetail(UserPassesTestMixin, generic.DetailView):
         context['choice_list'] = PollChoice.objects.filter(poll_id=self.kwargs['pk'])
         return context
 
+class ChoiceCreate(UserPassesTestMixin, generic.CreateView):
+    model = PollChoice
+    fields = ('choice_text',)
+    template_name = 'dashboard/choice_create_form.html'
+
+    def test_func(self, *args, **kwargs):
+        return self.request.user.profile.is_committee
+
+    def get_success_url(self, *args, **kwargs):
+        return '/dashboard/poll/{}'.format(self.kwargs['pk'])
+
+    def form_valid(self, form, *args, **kwargs):
+        form.instance.poll = Poll.objects.get(pk=self.kwargs['pk'])
+        return super(ChoiceCreate, self).form_valid(form, *args, **kwargs)
+        
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(ChoiceCreate, self).get_context_data(*args, **kwargs)
+        context['page_name'] = 'polls'
+        context['poll'] = Poll.objects.get(pk=self.kwargs['pk'])
+        context['choice_list'] = PollChoice.objects.filter(poll_id=self.kwargs['pk'])
+        return context
+
+
 class EventList(LoginRequiredMixin, generic.ListView):
     model = Event
 
@@ -359,9 +383,6 @@ class EventList(LoginRequiredMixin, generic.ListView):
 
 class EventDetail(LoginRequiredMixin, generic.DetailView):
     model = Event
-
-    def form_valid(self, *args, **kwargs):
-        return super(EventDetail, self).post(*args, **kwargs)
 
     def get_context_data(self, *args, **kwargs):
         context = super(EventDetail, self).get_context_data(*args, **kwargs)

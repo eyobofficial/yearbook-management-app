@@ -43,13 +43,14 @@ select {
 }
 
 /******************* DL ********************/
-dl > dt {
+dl > dt, .dt {
+    font-size: 13px !important;
     color: gray;
     font-weight: normal !important;
     margin-bottom: 0.1em;
 }
 
-dl > dd {
+dl > dd, .dd {
     color: inherit;
     font-size: 1.2em;
     font-weight: 400;
@@ -159,4 +160,8 @@ dl > dd {
 
 .label {
     padding: 1em 1.2em;
+}
+
+.table-borderless td {
+    border: none !important;
 }
