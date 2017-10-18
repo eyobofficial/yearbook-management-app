@@ -66,6 +66,9 @@
                             </div>
 
                             <h2 class="h4 breath-up-sm"><span class="fa fa-user"></span> &nbsp; {{ user.get_full_name|title }}</h2>
+                            {% if user.profile.is_committee %}
+                            <p class="bold text-danger"><span class="fa fa-star"></span> &nbsp; committee member</p>
+                            {% endif %}
                         </section>
 
                         <nav id="side-nav">

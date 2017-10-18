@@ -13,23 +13,11 @@
 
    <dt>Description:</dt>
    <dd>{{ poll.description }}</dd>
+
+   <dt>Poll Deadline</dt>
+   <dd>{{ poll.end_at|date:'M d, Y' }}</dd>
  </dl>
 
- <form method="POST">
-  {% csrf_token %}
-  {% for choice in poll.pollchoice_set.all %}
-  <div class="form-group">
-    <label>
-        <input type="radio" name="choice" value="{{ choice.id }}" required="required">
-        {{ choice.choice_text }} &nbsp;
-    </label>
-  </div>    
-   
-  {% endfor %}
+ <h4>Choices:</h4>
 
-  <div class="form-group">
-    <input type="submit" value="vote" class="btn btn-primary"> &nbsp;
-    <a href="{% url 'dashboard:poll-list' %}" title="Cancel voting" class="btn btn-danger">Cancel</a>
-  </div>
- </form>
 {% endblock content %}

@@ -271,7 +271,7 @@ class PollCreate(UserPassesTestMixin, CreateView):
         context = super(PollCreate, self).get_context_data(*args, **kwargs)
         context['page_name'] = 'polls'
         context['subpage_name'] = 'add poll'
-        return context 
+        return context
 
 @login_required
 def poll_result(request, pk):
@@ -334,6 +334,7 @@ class PollDetail(UserPassesTestMixin, generic.DetailView):
     def get_context_data(self, *args, **kwargs):
         context = super(PollDetail, self).get_context_data(*args, **kwargs)
         context['page_name'] = 'polls'
+        context['choice_list'] = PollChoice.objects.filter(poll_id=self.kwargs['pk'])
         return context
 
 class EventList(LoginRequiredMixin, generic.ListView):
