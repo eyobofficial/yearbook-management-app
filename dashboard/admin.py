@@ -31,8 +31,8 @@ class StudentYearbookAdmin(admin.ModelAdmin):
 
 @admin.register(Poll)
 class PollAdmin(admin.ModelAdmin):
-    list_display = ('poll_text', 'active', 'created_at', 'updated_at', 'end_at',)
-    list_filter = ('active', 'end_at',)
+    list_display = ('poll_text', 'active', 'created_at', 'updated_at', 'end_at', 'publish',)
+    list_filter = ('active', 'end_at', 'publish',)
 
 @admin.register(PollChoice)
 class PollChoiceAdmin(admin.ModelAdmin):

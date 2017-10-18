@@ -186,6 +186,11 @@ def yearbook_submit(request):
 class PollList(LoginRequiredMixin, generic.ListView):
     model = Poll
 
+    def get_queryset(self, *args, **kwargs):
+        if self.request.user.profile.is_committee:
+            return Poll.objects.all()
+        return Poll.objects.filter(publish=True)
+
     def get_context_data(self, *args, **kwargs):
         context = super(PollList, self).get_context_data(*args, **kwargs)
         context['page_name'] = 'polls'
@@ -197,6 +202,17 @@ class PollList(LoginRequiredMixin, generic.ListView):
         context['student_poll_list'] = student_poll_list
         context['active_poll_count'] = len(Poll.objects.filter(active=True))
         return context
+
+class PollDetail(UserPassesTestMixin, LoginRequiredMixin, generic.DetailView):
+    model = Poll 
+
+    def test_func(self, *args, **kwargs):
+        return self.request.user.profile.is_committee
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(PollList, self).get_context_data(*args, **kwargs)
+        context['page_name'] = 'polls'
+        return context 
 
 @login_required
 def vote(request, pk):

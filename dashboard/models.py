@@ -68,19 +68,20 @@ class StudentYearbook(models.Model):
 class Poll(models.Model):
     poll_text = models.CharField(max_length=255, help_text='Poll question to display')
     description = models.TextField(null=True, blank=True, help_text='Description of the purpose of the poll (Optional)')
-    active = models.BooleanField('Open for Vote', default=False, help_text='Weather or not the poll is currently open for voting.')
+    active = models.BooleanField('Open for Vote', default=False, help_text='Whether or not the poll is currently open for voting.')
+    end_at = models.DateField('Deadline for voting')
+    publish = models.BooleanField(default=False, help_text='Published polls can be viewed by all students')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    end_at = models.DateField('Deadline for voting')
 
     class Meta:
-        ordering = ['active', 'end_at',]
+        ordering = ['publish', 'active', 'end_at',]
 
     def __str__(self):
         return self.poll_text
 
-    # def get_absolute_url(self):
-    #     return reverse('dashboard:poll-detail', kwargs={'pk': str(self.pk)})
+    def get_absolute_url(self):
+        return reverse('dashboard:poll-detail', kwargs={'pk': str(self.pk)})
 
 class PollChoice(models.Model):
     poll = models.ForeignKey(Poll, on_delete=models.CASCADE)
