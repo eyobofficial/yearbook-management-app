@@ -16,6 +16,13 @@
 
    <dt>Poll Deadline:</dt>
    <dd>{{ poll.end_at|date:'M d, Y' }}</dd>
+
+   <dt>Publish Status:</dt>
+   {% if poll.publish %}
+   <dd><span class="fa fa-check-square-o"></span>&nbsp; Published</dd>
+   {% else %}
+   <dd><span class="fa fa-square-o"></span>&nbsp; Not Published</dd>
+   {% endif %}
  </dl>
 
  <div class="row">
@@ -26,7 +33,10 @@
                   {% for choice in choice_list %}
                   <tr>
                       <td><span class="fa fa-circle-o">&nbsp; </span> <span class="dd">{{ choice.choice_text }}</span></td>
-                      <td class="text-left"><a href="#"><span class="fa fa-edit"></span>&nbsp; Edit</a></td>
+                      <td class="text-left">
+                         <a href="{% url 'dashboard:choice-update' choice.id %}"><span class="fa fa-edit"></span>&nbsp; Edit</a>&nbsp; 
+                         <a href="{% url 'dashboard:choice-delete' choice.id %}"><span class="fa fa-remove"></span>&nbsp; Delete</a>
+                      </td>
                   </tr>
                   {% endfor %}
               </table>

@@ -360,6 +360,47 @@ class ChoiceCreate(UserPassesTestMixin, generic.CreateView):
         context['choice_list'] = PollChoice.objects.filter(poll_id=self.kwargs['pk'])
         return context
 
+class ChoiceUpdate(UserPassesTestMixin, generic.UpdateView):
+    model = PollChoice
+    fields = ('choice_text',)
+    template_name = 'dashboard/choice_update_form.html'
+
+    def test_func(self, *args, **kwargs):
+        return self.request.user.profile.is_committee
+
+    def get_success_url(self, *args, **kwargs):
+        choice = PollChoice.objects.get(pk=self.kwargs['pk'])
+        return '/dashboard/poll/{}'.format(choice.poll.id)
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(ChoiceUpdate, self).get_context_data(*args, **kwargs)
+        context['page_name'] = 'polls'
+        targeted_choice = PollChoice.objects.get(pk=self.kwargs['pk'])
+        poll = Poll.objects.get(pk=targeted_choice.poll.id)
+        context['targeted_choice'] = targeted_choice
+        context['poll'] = poll
+        return context
+
+class ChoiceDelete(UserPassesTestMixin, generic.DeleteView):
+    model = PollChoice
+    template_name = 'dashboard/choice_confirm_delete.html'
+
+    def test_func(self, *args, **kwargs):
+        return self.request.user.profile.is_committee
+
+    def get_success_url(self, *args, **kwargs):
+        choice = PollChoice.objects.get(pk=self.kwargs['pk'])
+        return '/dashboard/poll/{}'.format(choice.poll.id)
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(ChoiceDelete, self).get_context_data(*args, **kwargs)
+        context['page_name'] = 'polls'
+        choice = PollChoice.objects.get(pk=self.kwargs['pk'])
+        poll = Poll.objects.get(pk=choice.poll.id)
+        context['choice'] = choice
+        context['poll'] = poll
+        return context
+
 
 class EventList(LoginRequiredMixin, generic.ListView):
     model = Event
