@@ -3,8 +3,16 @@
 
 {% block content %}
 <header id="detail-header">
-    <h2>Polls</h2>
-    <h3>Poll Detail</h3>
+    <div class="row">
+        <div class="col-sm-6">
+            <h2>Polls</h2>
+            <h3>Poll Detail</h3>
+        </div>
+
+        <div class="col-sm-6">
+           <a href="{% url 'dashboard:poll-update' poll.id %}" class="btn btn-primary btn-lg pull-right">Edit Poll</a>
+        </div>
+    </div>
 </header>
 
  <dl>

@@ -28,7 +28,10 @@
                     <th>Poll</th>
                     <th>Status</th>
                     <th class="text-center">Deadline</th>
+                    <th>Vote Status</th>
+                    {% if user.profile.is_committee %}
                     <th></th>
+                    {% endif %}
                 </tr>
             </thead>
 
@@ -43,6 +46,10 @@
                     <td class="bold"><span class="fa fa-check-square-o"></span>&nbsp; VOTED</td>
                     {% else %}
                     <td class="bold text-danger"><span class="fa fa-warning"></span>&nbsp; PENDING</td>
+                    {% endif %}
+
+                    {% if user.profile.is_committee %}
+                    <td><a href="{% url 'dashboard:poll-detail' poll.id %}"><span class="fa fa-edit"></span> Edit</a></td>
                     {% endif %}
                 </tr>
                 {% endfor %}

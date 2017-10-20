@@ -261,7 +261,7 @@ def vote(request, pk):
 
 class PollCreate(UserPassesTestMixin, CreateView):
     model = Poll
-    fields = ('poll_text', 'description', 'end_at', 'active',)
+    fields = ('poll_text', 'description', 'end_at', 'publish',)
     template_name = 'dashboard/poll_create_form.html'
 
     def test_func(self):
@@ -271,6 +271,21 @@ class PollCreate(UserPassesTestMixin, CreateView):
         context = super(PollCreate, self).get_context_data(*args, **kwargs)
         context['page_name'] = 'polls'
         context['subpage_name'] = 'add poll'
+        return context
+
+class PollUpdate(UserPassesTestMixin, UpdateView):
+    model = Poll 
+    fields = ('poll_text', 'description', 'end_at', 'publish',)
+
+    template_name = 'dashboard/poll_update_form.html'
+
+    def test_func(self):
+        return self.request.user.profile.is_committee
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(PollUpdate, self).get_context_data(*args, **kwargs)
+        context['page_name'] = 'polls'
+        context['subpage_name'] = 'update poll'
         return context
 
 @login_required

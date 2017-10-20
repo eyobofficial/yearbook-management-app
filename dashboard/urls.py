@@ -18,6 +18,7 @@ urlpatterns = [
     url(r'^poll/choice/(?P<pk>[0-9]+)/update/$', views.ChoiceUpdate.as_view(), name='choice-update'),
     url(r'^poll/choice/(?P<pk>[0-9]+)/delete/$', views.ChoiceDelete.as_view(), name='choice-delete'),
     url(r'^poll/add/$', views.PollCreate.as_view(), name='poll-create'),
+    url(r'^poll/update/(?P<pk>[0-9]+)$', views.PollUpdate.as_view(), name='poll-update'),
     url(r'^events/$', views.EventList.as_view(), name='event-list'),
     url(r'^event/(?P<pk>[0-9]+)$', views.EventDetail.as_view(), name='event-detail'),
     url(r'^event/add/$', views.EventCreate.as_view(), name='event-create'),
