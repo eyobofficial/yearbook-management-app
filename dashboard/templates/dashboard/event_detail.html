@@ -73,6 +73,11 @@
     </div>
 </section>
 
+{% if user.profile.is_committee %}
+<br>
+<a href="#"><span class="fa fa-plus"></span>&nbsp; Add Program</a>
+{% endif %}
+
 {% if program_list %}
 <div class="panel panel-default breath-up-sm">
     <div class="panel-heading">
