@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<header id="detail-header">
+    <h2>Events</h2>
+    {% if program %}
+    <h3>Update Program</h3>
+    {% else %}
+    <h3>Add New Program</h3>
+    {% endif %}
+</header>
+
+<section>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form|crispy }}
+
+        <br>
+        <div class="form-group">
+            {% if program %}
+            <button type="submit" class="btn btn-lg btn-primary"> Update </button> &nbsp; &nbsp;
+            {% else %}
+            <button type="submit" class="btn btn-lg btn-primary"> Add </button> &nbsp; &nbsp;
+            {% endif %}
+            <a href="{% url 'dashboard:event-detail' event.id %}" class="btn btn-lg btn-danger">Cancel</a>
+        </div>
+    </form>
+</section>
+{% endblock content %}

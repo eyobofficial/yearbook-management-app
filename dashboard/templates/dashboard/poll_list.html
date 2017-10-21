@@ -4,7 +4,7 @@
 {% block content %}
 {% if active_poll_count > 0 %}
    <div class="alert alert-success">
-       <p class="text-center"><span class="fa fa-info-circle"></span> &nbsp; You currently have <strong>{{ active_poll_count}}</strong> open polls to vote.</p>
+       <p class="text-center"><span class="fa fa-info-circle"></span> &nbsp; You currently have <strong>{{ poll_list.count }}</strong> open polls to vote.</p>
    </div><!-- /.alert -->
 {% else %}
    <div class="alert alert-danger">

@@ -508,6 +508,61 @@ class EventDelete(UserPassesTestMixin, DeleteView):
         context['subpage_name'] = 'delete event'
         return context
 
+class ProgramCreate(UserPassesTestMixin, CreateView):
+    model = Program
+    fields = ('title', 'description', 'start_at', 'end_at',)
+
+    def test_func(self):
+        return self.request.user.profile.is_committee
+
+    def get_success_url(self, *args, **kwargs):
+        return '/dashboard/event/{}'.format(self.kwargs['pk'])
+
+    def form_valid(self, form, *args, **kwargs):
+        form.instance.event = Event.objects.get(pk=self.kwargs['pk'])
+        return super(ProgramCreate, self).form_valid(form, *args, **kwargs)
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(ProgramCreate, self).get_context_data(*args, **kwargs)
+        context['page_name'] = 'events'
+        context['subpage_name'] = 'add program'
+        return context
+
+class ProgramUpdate(UserPassesTestMixin, UpdateView):
+    model = Program
+    fields = ('title', 'description', 'start_at', 'end_at',)
+
+    def test_func(self):
+        return self.request.user.profile.is_committee
+
+    def get_success_url(self, *args, **kwargs):
+        return '/dashboard/event/{}'.format(self.kwargs['event_pk'])
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(ProgramUpdate, self).get_context_data(*args, **kwargs)
+        context['event'] = Event.objects.get(pk=self.kwargs['event_pk'])
+        context['page_name'] = 'events'
+        context['subpage_name'] = 'update program'
+        return context
+
+class ProgramDelete(UserPassesTestMixin, DeleteView):
+    model = Program
+    template_name = 'dashboard/program_confirm_delete.html'
+
+    def test_func(self):
+        return self.request.user.profile.is_committee
+
+    def get_success_url(self, *args, **kwargs):
+        return '/dashboard/event/{}'.format(self.kwargs['event_pk'])
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(ProgramDelete, self).get_context_data(*args, **kwargs)
+        context['event'] = Event.objects.get(pk=self.kwargs['event_pk'])
+        context['page_name'] = 'events'
+        context['subpage_name'] = 'delete program'
+        return context
+
+
 @login_required
 def subscribe_to_event(request):
     if request.method == 'GET':
@@ -646,4 +701,64 @@ def account_update(request):
             'page_name': 'account',
             'account_form': account_form,
             'profile_form': profile_form,
+        })
+
+class StudentList(UserPassesTestMixin, generic.ListView):
+    model = User 
+    context_object_name = 'student_list'
+    template_name = 'dashboard/student_list.html'
+
+    def test_func(self, *args, **kwargs):
+        return self.request.user.profile.is_committee
+
+    def get_queryset(self, *args, **kwargs):
+        return User.objects.exclude(is_superuser=True, is_staff=True).order_by('is_active', 'first_name')
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(StudentList, self).get_context_data(*args, **kwargs)
+        context['unapproved_student_list'] = User.objects.filter(is_active=False)
+        context['page_name'] = 'students'
+        return context
+
+class StudentDetail(UserPassesTestMixin, generic.DetailView):
+    model = User 
+    context_object_name = 'student'
+    template_name = 'dashboard/student_detail.html'
+
+    def test_func(self, *args, **kwargs):
+        return self.request.user.profile.is_committee
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(StudentDetail, self).get_context_data(*args, **kwargs)
+        context['page_name'] = 'students'
+        return context
+
+@user_passes_test(check_committee)
+def student_activate(request, pk):
+    template_name = 'dashboard/activation_confirm_form.html'
+    student = get_object_or_404(User, pk=pk)
+
+    if request.method == 'POST':
+        student.is_active = True
+        student.save()
+        return redirect('dashboard:student-detail', pk=student.id)
+    return render(request, template_name, {
+            'student': student,
+            'page_name': 'students',
+            'subpage_name': 'activate student',
+        })
+
+@user_passes_test(check_committee)
+def student_deactivate(request, pk):
+    template_name = 'dashboard/activation_confirm_form.html'
+    student = get_object_or_404(User, pk=pk)
+
+    if request.method == 'POST':
+        student.is_active = False
+        student.save()
+        return redirect('dashboard:student-detail', pk=student.id)
+    return render(request, template_name, {
+            'student': student,
+            'page_name': 'students',
+            'subpage_name': 'deactivate student',
         })

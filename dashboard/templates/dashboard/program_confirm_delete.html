@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<header id="detail-header">
+    <h2>Events</h2>
+    <h3>Delete Program</h3>
+</header>
+
+ <dl>
+   <dt><span class="fa fa-warning"></span>&nbsp; Are you sure you want to delete the following program?</dt>
+   <dd>{{ program.title }}</dd>
+
+   <dt>Program Description</dt>
+   <dd>{{ program.description }}</dd>
+ </dl>
+
+ <br>
+
+ <form method="POST">
+   {% csrf_token %}
+   {{ form|crispy }}
+   <div class="form-group">
+     <button type="submit" class="btn btn-lg btn-primary">Delete</button>&nbsp;&nbsp; 
+     <a href="{% url 'dashboard:event-detail' event.id %}" class="btn btn-danger btn-lg"> Cancel </a>
+   </div>
+ </form>
+{% endblock content %}

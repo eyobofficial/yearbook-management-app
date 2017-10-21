@@ -75,11 +75,11 @@
 
 {% if user.profile.is_committee %}
 <br>
-<a href="#"><span class="fa fa-plus"></span>&nbsp; Add Program</a>
+<a href="{% url 'dashboard:program-create' event.id %}"><span class="fa fa-plus"></span>&nbsp; Add Program</a>
 {% endif %}
 
 {% if program_list %}
-<div class="panel panel-default breath-up-sm">
+<div class="panel panel-default panel-sm breath-up-sm">
     <div class="panel-heading">
         Event Programs
     </div>
@@ -93,6 +93,10 @@
                     <th>Program</th>
                     <th>Starts</th>
                     <th>Ends</th>
+                    {% if user.profile.is_committee %}
+                    <th></th>
+                    <th></th>
+                    {% endif %}
                 </tr>
             </thead>
             <tbody>
@@ -102,6 +106,10 @@
                         <td>{{ program.title }}</td>
                         <td>{{ program.start_at|date:'H:i A' }}</td>
                         <td>{{ program.end_at|date:'H:i A' }}</td>
+                        {% if user.profile.is_committee %}
+                        <td><a href="{% url 'dashboard:program-update' event.id program.id %}"><span class="fa fa-edit"></span> Edit</a></td>
+                        <td><a href="{% url 'dashboard:program-delete' event.id program.id %}"><span class="fa fa-remove"></span> Delete</a></td>
+                        {% endif %}
                     </tr>
                 {% endfor %}
             </tbody>               

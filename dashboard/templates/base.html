@@ -122,6 +122,11 @@
                                     <a href="{% url 'dashboard:account-detail' %}"><span class="fa fa-wrench"></span>&nbsp; Account</a>
                                 </li>
 
+                                {% if user.profile.is_committee %}
+                                <li {% if page_name == 'students' %}class="active"{% endif %}>
+                                    <a href="{% url 'dashboard:student-list' %}"><span class="fa fa-wrench"></span>&nbsp; Students</a>
+                                </li>
+                                {% endif %}
                             </ul>
                         </nav>
                     </div><!-- /.account-container -->

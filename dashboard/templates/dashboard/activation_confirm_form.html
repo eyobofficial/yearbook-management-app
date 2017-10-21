@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<header id="detail-header">
+    <h2>Student</h2>
+    {% if student.is_active %}
+    <h3>Confirm Account Deactivation</h3>
+    {% else %}
+    <h3>Confirm Account Activation</h3>
+    {% endif %}
+</header>
+
+{% if student.is_active %}
+<p class="dt"><span class="fa fa-warning"></span>&nbsp; Are you sure you want to deactivate the student account?</p>
+{% else %}
+<p class="dt"><span class="fa fa-warning"></span>&nbsp; Are you sure you want to activate the student account?</p>
+{% endif %}
+
+<br>
+
+<form method="POST">
+ {% csrf_token %}
+
+ <div class="form-group">
+   {% if student.is_active %}
+   <button type="submit" class="btn btn-lg btn-primary">Deactivate</button>&nbsp;&nbsp; 
+   {% else %}
+   <button type="submit" class="btn btn-lg btn-primary">Activate</button>&nbsp;&nbsp; 
+   {% endif %}
+   <a href="{% url 'dashboard:student-detail' student.id %}" class="btn btn-danger btn-lg"> Cancel </a>
+ </div>
+</form>
+{% endblock content %}

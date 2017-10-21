@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if student_list %}
+    {% if unapproved_student_list %}
+    <div class="alert alert-danger">
+        <p class="text-center"><span class="fa fa-warning"></span> You have <strong>{{ unapproved_student_list.count }}</strong> new registered student accounts which are not activated yet.</p>
+    </div>
+    {% else %}
+    <div class="alert alert-success">
+        <p class="text-center"><span class="fa fa-info-circle"></span> You have no new registered student account to activate.</p>
+    </div>
+    {% endif %}
+    <div class="panel panel-default panel-lg">
+        <div class="panel-heading">
+            List of All Registered Students &nbsp;<span class="badge badge-info"> {{ student_list.count }}</span>
+        </div>
+
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table panel-table table-hover table-stripped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th><span class="fa fa-user"></span>&nbsp; Name </th>
+                            <th><span class="fa fa-calendar"></span>&nbsp; Registered</th>
+                            <th><span class="fa fa-calendar"></span>&nbsp; Last Login</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for student in student_list %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td><a href="{% url 'dashboard:student-detail' student.id %}">{{ student.get_full_name|title }}</a></td>
+                            <td>{{ student.date_joined|date:'M d, Y' }}</td>
+                            <td>{{ student.last_login|date:'M d, Y' }}</td>
+
+                            {% if student.is_active %}
+                            <td><span class="badge badge-primary">Active</span></td>
+                            {% else %}
+                            <td><span class="badge badge-default">Not Active</span></td>
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endif %}
+{% endblock %}

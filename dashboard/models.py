@@ -134,7 +134,7 @@ class Event(models.Model):
 class Program(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
-    description =  models.TextField(help_text='Short description of the program')
+    description =  models.TextField(null=True, blank=True, help_text='Short description of the program')
     start_at = models.TimeField(help_text='Starting time of the program')
     end_at = models.TimeField(help_text='Ending time of the program')
     created_at = models.DateTimeField(auto_now_add=True)
