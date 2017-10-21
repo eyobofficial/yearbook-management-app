@@ -591,7 +591,7 @@ a.btn-danger,
 #side-nav ul.primary-menu > li.active > a {
 	display: block;
 	width: 100%;
-	padding: 0.8em 0.2em 0.8em 0.6em;
+	padding: 0.8em 0 0.8em 0.6em;
 	border-radius: 2px;
     background: #23c6c8 !important;
 }
