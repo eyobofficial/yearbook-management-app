@@ -572,6 +572,33 @@ class PaymentCreate(UserPassesTestMixin, generic.CreateView):
         context['subpage_name'] = 'add payment'
         return context
 
+class PaymentUpdate(UserPassesTestMixin, generic.UpdateView):
+    model = Payment 
+    fields = ('title', 'description', 'amount', 'due_date', 'publish',)
+
+    def test_func(self, *args, **kwargs):
+        return self.request.user.profile.is_committee
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(PaymentUpdate, self).get_context_data(*args, **kwargs)
+        context['page_name'] = 'payments'
+        context['subpage_name'] = 'update payment'
+        return context
+
+class PaymentDelete(UserPassesTestMixin, DeleteView):
+    model = Payment
+    template_name = 'dashboard/payment_confirm_delete.html'
+    success_url = '/dashboard/payments/'
+
+    def test_func(self, *args, **kwargs):
+        return self.request.user.profile.is_committee
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(PaymentDelete, self).get_context_data(*args, **kwargs)
+        context['page_name'] = 'payments'
+        context['subpage_name'] = 'delete payment'
+        return context    
+
 class AccountDetail(LoginRequiredMixin, generic.TemplateView):
     template_name = 'dashboard/account_detail.html'
 

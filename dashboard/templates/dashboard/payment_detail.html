@@ -3,9 +3,21 @@
 
 {% block content %}
 <header id="detail-header">
-    <h2>Payments</h2>
-    <h3>{{ payment.title|title }}</h3>
+    <div class="row">
+        <div class="col-sm-6">
+            <h2>Payments</h2>
+            <h3>{{ payment.title|title }}</h3>
+        </div>
+
+        <div class="col-sm-6">
+            {% if user.profile.is_committee %}
+            <a href="{% url 'dashboard:payment-delete' payment.id %}" class="breath-left-sm btn btn-lg btn-danger pull-right"><span class="fa fa-edit"></span> Delete</a>
+            <a href="{% url 'dashboard:payment-update' payment.id %}" class="breath-left-sm btn btn-lg btn-primary pull-right"><span class="fa fa-edit"></span> Edit</a>
+            {% endif %}
+        </div>
+    </div>
 </header>
+
 
 <section class="event-detail">
     <dl>

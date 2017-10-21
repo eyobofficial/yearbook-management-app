@@ -17,6 +17,10 @@
                             <th>Payment</th>
                             <th><span class="fa fa-calendar"></span>&nbsp; Due Date</th>
                             <th>Status</th>
+                            {% if user.profile.is_committee %}
+                            <th></th>
+                            <th></th>
+                            {% endif %}
                         </tr>
                     </thead>
                     <tbody>
@@ -29,6 +33,11 @@
                            <td class="text-success bold"><span class="fa fa-check-square-o"></span>&nbsp; PAID</td>
                            {% else %}
                            <td class="text-danger bold"><span class="fa fa-warning"></span>&nbsp; PENDING</td>
+                           {% endif %}
+
+                           {% if user.profile.is_committee %}
+                           <td><a href="{% url 'dashboard:payment-update' payment.id %}"><span class="fa fa-edit"></span> Edit</a></td>
+                           <td><a href="{% url 'dashboard:payment-delete' payment.id %}"><span class="fa fa-remove"></span> Delete</a></td>
                            {% endif %}
                         </tr>
                         {% endfor %}

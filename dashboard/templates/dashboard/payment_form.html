@@ -4,7 +4,11 @@
 {% block content %}
 <header id="detail-header">
     <h2>Payments</h2>
+    {% if payment %}
+    <h3>Update Payment</h3>
+    {% else %}
     <h3>Add New Payment</h3>
+    {% endif %}
 </header>
 
 <section>
@@ -13,7 +17,11 @@
         {{ form|crispy }}
 
         <div class="form-group">
+            {% if payment %}
+            <button type="submit" class="btn btn-lg btn-primary"> Update </button> &nbsp; &nbsp;
+            {% else %}
             <button type="submit" class="btn btn-lg btn-primary"> Add </button> &nbsp; &nbsp;
+            {% endif %}
             <a href="{% url 'dashboard:payment-list' %}" class="btn btn-lg btn-danger">Cancel</a>
         </div>
     </form>
