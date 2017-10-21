@@ -54,7 +54,7 @@
          <br>
          <div>
             <a href="{% url 'dashboard:choice-create' poll.id %}"><span class="fa fa-plus"></span> Add New Choice</a> &nbsp; &nbsp;
-            <a href="#" class="btn btn-primary">Vote Now</a>
+            <a href="{% url 'dashboard:poll-vote' poll.id %}" class="btn btn-primary">Vote Now</a>
          </div>
      </div>
  </div><!-- /.row -->

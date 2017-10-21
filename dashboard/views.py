@@ -276,7 +276,6 @@ class PollCreate(UserPassesTestMixin, CreateView):
 class PollUpdate(UserPassesTestMixin, UpdateView):
     model = Poll 
     fields = ('poll_text', 'description', 'end_at', 'publish',)
-
     template_name = 'dashboard/poll_update_form.html'
 
     def test_func(self):
@@ -286,6 +285,20 @@ class PollUpdate(UserPassesTestMixin, UpdateView):
         context = super(PollUpdate, self).get_context_data(*args, **kwargs)
         context['page_name'] = 'polls'
         context['subpage_name'] = 'update poll'
+        return context
+
+class PollDelete(UserPassesTestMixin, DeleteView):
+    model = Poll
+    template_name = 'dashboard/poll_confirm_delete.html'
+    success_url = '/dashboard/polls/'
+
+    def test_func(self):
+        return self.request.user.profile.is_committee
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(PollDelete, self).get_context_data(*args, **kwargs)
+        context['page_name'] = 'polls'
+        context['subpage_name'] = 'Delete poll'
         return context
 
 @login_required
@@ -458,12 +471,42 @@ class EventCreate(UserPassesTestMixin, CreateView):
     
     def test_func(self):
         return self.request.user.profile.is_committee
-
+        
     def get_context_data(self, *args, **kwargs):
         context = super(EventCreate, self).get_context_data(*args, **kwargs)
         context['page_name'] = 'events'
         context['subpage_name'] = 'add event'
-        return context 
+        return context
+
+class EventUpdate(UserPassesTestMixin, UpdateView):
+    model = Event 
+    fields = ('title', 'description', 'venue', 'event_datetime', 'dress_code', 'fee', 'event_photo', 'publish',)
+    
+    def test_func(self):
+        return self.request.user.profile.is_committee
+
+    # def get_success_url(self, *args, **kwargs):
+    #     return '/dashboard/event/{}'.format(self.kwargs['pk'])
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(EventUpdate, self).get_context_data(*args, **kwargs)
+        context['page_name'] = 'events'
+        context['subpage_name'] = 'update event'
+        return context
+
+class EventDelete(UserPassesTestMixin, DeleteView):
+    model = Event 
+    template_name = 'dashboard/event_confirm_delete.html'
+    success_url = '/dashboard/events/'
+
+    def test_func(self):
+        return self.request.user.profile.is_committee
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(EventDelete, self).get_context_data(*args, **kwargs)
+        context['page_name'] = 'events'
+        context['subpage_name'] = 'delete event'
+        return context
 
 @login_required
 def subscribe_to_event(request):

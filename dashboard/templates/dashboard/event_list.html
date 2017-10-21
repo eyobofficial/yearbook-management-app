@@ -2,7 +2,6 @@
 
 {% block content %}
 {% if event_list %}
-    {% for event in event_list %}
     <div class="panel panel-default panel-lg">
         <div class="panel-heading">
             Upcoming Events
@@ -18,25 +17,35 @@
                             <th><span class="fa fa-calendar"></span>&nbsp; Date</th>
                             <th><span class="fa fa-map-marker"></span>&nbsp; Venue</th>
                             <th><span class="fa fa-group"></span>&nbsp; Attending</th>
+                            {% if user.profile.is_committee %}
+                            <th></th>
+                            <th></th>
+                            {% endif %}
                         </tr>
                     </thead>
                     <tbody>
+                        {% for event in event_list %}
                         <tr>
-                            <td class="text-md">{{ forloop.counter }}</td>
-                            <td class="text-md"><a href="{% url 'dashboard:event-detail' event.id %}">{{ event.title|upper }}</a></td>
-                            <td class="text-md">{{ event.event_datetime|date:'M d, Y' }}</td>
-                            <td class="text-md">{{ event.venue|title }}</td>
+                            <td>{{ forloop.counter }}</td>
+                            <td><a href="{% url 'dashboard:event-detail' event.id %}">{{ event.title|upper }}</a></td>
+                            <td>{{ event.event_datetime|date:'M d, Y' }}</td>
+                            <td>{{ event.venue|title }}</td>
                             {% for subscription in subscription_list %}
                                 {% if subscription.0 == event.id %}
                                 <td><span class="label label-primary">{{ subscription.1 }} Students</span></td>
                                 {% endif %}
                             {% endfor %}
+
+                            {% if user.profile.is_committee %}
+                            <td><a href="{% url 'dashboard:event-update' event.id %}"><span class="fa fa-edit"></span> Edit</a></td>
+                            <td><a href="{% url 'dashboard:event-delete' event.id %}"><span class="fa fa-remove"></span> Delete</a></td>
+                            {% endif %}
                         </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-    {% endfor %}
 {% endif %}
 {% endblock %}

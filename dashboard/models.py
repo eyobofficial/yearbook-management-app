@@ -63,7 +63,7 @@ class StudentYearbook(models.Model):
         return '{}, {}'.format(self.first_name, self.last_name)
 
     def get_absolute_url(self):
-        return reverse(url='dashboard:student-yearbook-detail', kwargs={'pk': str(self.pk)})
+        return reverse('dashboard:student-yearbook-detail', kwargs={'pk': str(self.pk)})
 
 class Poll(models.Model):
     poll_text = models.CharField(max_length=255, help_text='Poll question to display')
@@ -129,7 +129,7 @@ class Event(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse(url='dashboard:event-detail', kwargs={'pk', str(self.pk)})
+        return reverse('dashboard:event-detail', kwargs={'pk': str(self.pk)})
 
 class Program(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)

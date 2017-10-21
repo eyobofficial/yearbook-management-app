@@ -31,6 +31,7 @@
                     <th>Vote Status</th>
                     {% if user.profile.is_committee %}
                     <th></th>
+                    <th></th>
                     {% endif %}
                 </tr>
             </thead>
@@ -50,6 +51,7 @@
 
                     {% if user.profile.is_committee %}
                     <td><a href="{% url 'dashboard:poll-detail' poll.id %}"><span class="fa fa-edit"></span> Edit</a></td>
+                     <td><a href="{% url 'dashboard:poll-delete' poll.id %}"><span class="fa fa-remove"></span> Delete</a></td>
                     {% endif %}
                 </tr>
                 {% endfor %}

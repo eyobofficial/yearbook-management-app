@@ -13,13 +13,17 @@
             <form action="{% url 'dashboard:event-subscribe' %}" method="POST">
             {% csrf_token %}
             <input type="hidden" name="event_id" value="{{ event.id }}">
+            {% if user.profile.is_committee %}
+            <a href="{% url 'dashboard:event-delete' event.id %}" class="breath-left-sm btn btn-lg btn-danger pull-right"><span class="fa fa-edit"></span> Delete</a>
+            <a href="{% url 'dashboard:event-update' event.id %}" class="breath-left-sm btn btn-lg btn-primary pull-right"><span class="fa fa-edit"></span> Edit</a>
+            {% endif %}
             <button type="submit" class="btn btn-lg btn-primary pull-right">
                 {% if event_subscription %}
                 <span class="fa fa-check"></span>&nbsp; Attending
                 {% else %}
                 Attend Event
                 {% endif %}
-            </button>
+            </button> 
             </form>
         </div>
     </div>
@@ -32,7 +36,7 @@
             <dd>{{ event.event_datetime|date:'H:i A M d, Y' }}</dd>
 
             <dt><span class="fa fa-map-marker"></span>&nbsp; Venue</dt>
-            <dd>Main Hall</dd>
+            <dd>{{ event.venue }}</dd>
 
             <dt><span class="fa fa-male"></span>&nbsp; Dress Code</dt>
             {% if event.dress_code %}

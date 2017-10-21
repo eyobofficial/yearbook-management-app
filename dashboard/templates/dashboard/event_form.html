@@ -4,7 +4,11 @@
 {% block content %}
 <header id="detail-header">
     <h2>Events</h2>
+    {% if event %}
+    <h3>Update Event</h3>
+    {% else %}
     <h3>Add New Event</h3>
+    {% endif %}
 </header>
 
 <section>
@@ -14,8 +18,13 @@
 
         <br>
         <div class="form-group">
+            {% if event %}
+            <button type="submit" class="btn btn-lg btn-primary"> Update </button> &nbsp; &nbsp;
+            <a href="{% url 'dashboard:event-detail' event.id %}" class="btn btn-lg btn-danger">Cancel</a>
+            {% else %}
             <button type="submit" class="btn btn-lg btn-primary"> Add </button> &nbsp; &nbsp;
-            <a href="{% url 'dashboard:payment-list' %}" class="btn btn-lg btn-danger">Cancel</a>
+            <a href="{% url 'dashboard:event-list' %}" class="btn btn-lg btn-danger">Cancel</a>
+            {% endif %}
         </div>
     </form>
 </section>
