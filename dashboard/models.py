@@ -41,7 +41,7 @@ def baby_photo_path(instance, filename):
     return 'uploads/students/{}/{}'.format(instance.student.id, 'baby.jpg')
 
 class StudentYearbook(models.Model):
-    student = models.OneToOneField(User, on_delete=models.CASCADE)
+    student = models.ForeignKey(User, on_delete=models.CASCADE)
     yearbook = models.ForeignKey(Yearbook, default=1, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)

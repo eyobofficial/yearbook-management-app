@@ -717,6 +717,7 @@ class StudentList(UserPassesTestMixin, generic.ListView):
     def get_context_data(self, *args, **kwargs):
         context = super(StudentList, self).get_context_data(*args, **kwargs)
         context['unapproved_student_list'] = User.objects.filter(is_active=False)
+        context['student_yearbook_list'] = StudentYearbook.objects.all()
         context['page_name'] = 'students'
         return context
 

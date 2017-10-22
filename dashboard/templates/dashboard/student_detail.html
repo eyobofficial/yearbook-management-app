@@ -23,11 +23,8 @@
     <div class="row">
         <div class="col-sm-6">
             <dl>
-                <dt><span class="fa fa-user"></span>&nbsp; First Name</dt>
-                <dd>{{ student.first_name|title }}</dd>
-
-                <dt><span class="fa fa-user"></span>&nbsp; Last Name</dt>
-                <dd>{{ student.last_name|title }}</dd>
+                <dt><span class="fa fa-user"></span>&nbsp; Full Name</dt>
+                <dd>{{ student.get_full_name|title }}</dd>
 
                 <dt><span class="fa fa-envelope"></span>&nbsp; Email</dt>
                 <dd>{{ student.email|lower }}</dd>

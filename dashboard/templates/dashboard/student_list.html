@@ -22,19 +22,31 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th><span class="fa fa-user"></span>&nbsp; Name </th>
+                            <th><span class="fa fa-user-circle"></span>&nbsp; Name </th>
                             <th><span class="fa fa-calendar"></span>&nbsp; Registered</th>
                             <th><span class="fa fa-calendar"></span>&nbsp; Last Login</th>
-                            <th></th>
+                            <th><span class="fa fa-book"></span>&nbsp; Yearbook</th>
+                            <th><span class="fa fa-bolt"></span>&nbsp; Account</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for student in student_list %}
                         <tr>
                             <td>{{ forloop.counter }}</td>
-                            <td><a href="{% url 'dashboard:student-detail' student.id %}">{{ student.get_full_name|title }}</a></td>
+                            <td>
+                                <a href="{% url 'dashboard:student-detail' student.id %}">{{ student.get_full_name|title }}</a> 
+                                {% if student.profile.is_committee %}
+                                &nbsp; <span class="text-danger fa fa-star"></span>
+                                {% endif %}
+                            </td>
                             <td>{{ student.date_joined|date:'M d, Y' }}</td>
                             <td>{{ student.last_login|date:'M d, Y' }}</td>
+
+                            {% if student.studentyearbook_set.all %}
+                            <td class="bold"><span class="fa fa-check-square-o"></span> Submitted</td>
+                            {% else %}
+                            <td class="bold text-danger"><span class="fa fa-warning"></span> Not Submitted</td>
+                            {% endif %}
 
                             {% if student.is_active %}
                             <td><span class="badge badge-primary">Active</span></td>
